@@ -1,0 +1,31 @@
+name: Construieste APK
+on:
+  push:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dezarhiveaza proiectul
+        run: unzip -o Regizor360-proiect.zip -d .
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Compileaza
+        run: gradle :app:assembleRelease --no-daemon --stacktrace
+      - name: Pregateste fisierul
+        run: cp app/build/outputs/apk/release/app-release.apk Regizor360.apk
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.${{ github.run_number }}
+          name: Regizor 360 - versiunea 1.${{ github.run_number }}
+          body: Descarca Regizor360.apk de mai jos si instaleaza-l pe telefon.
+          files: Regizor360.apk
+          make_latest: true
