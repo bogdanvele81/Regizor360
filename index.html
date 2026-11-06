@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WellCar</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1c4fd8">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WellCar">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+<style>
+:root{--bg:#eef2f6;--card:#fff;--ink:#0f1b2d;--mut:#5b6b7c;--line:#d9e1e8;--acc:#1c4fd8;--accink:#fff;--ok:#1f8a5b;--amb:#b36b00;--bad:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1520;--card:#162231;--ink:#e9eef4;--mut:#93a4b5;--line:#263648;--acc:#6b9bff;--accink:#0d1520;--ok:#4fd08f;--amb:#f0b04a;--bad:#ff7f6e}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.4 Barlow,system-ui,sans-serif}
+h2,h3,.plate,.brand{font-family:"Barlow Semi Condensed",system-ui,sans-serif}
+h2{font-size:24px;margin:6px 0 12px}h3{font-size:19px;margin:0}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;max-width:720px;margin:0 auto}
+.brand{font-size:24px;font-weight:700}
+main{max-width:720px;margin:0 auto;padding:6px 14px 110px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav button{flex:1;max-width:200px;border:0;background:none;color:var(--mut);font:inherit;font-size:13px;padding:4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative}
+nav button span{font-size:22px}nav button.on{color:var(--acc);font-weight:500}
+.bdg{position:absolute;top:0;left:55%;background:var(--bad);color:#fff;border-radius:99px;font-size:11px;padding:0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
+.tap{cursor:pointer}.card.offer{border-color:var(--acc);border-width:2px}
+.hero{height:140px;border-radius:14px;background:linear-gradient(135deg,var(--line),var(--card));color:var(--mut);display:flex;align-items:center;justify-content:center;position:relative}
+.hero.big{height:200px}.hero svg{width:58%;max-width:280px}.hero .plate{position:absolute;left:10px;bottom:10px}
+.plate{display:inline-flex;border:2px solid #111;border-radius:7px;background:#fff;color:#111;font-weight:700;font-size:20px;letter-spacing:.06em;overflow:hidden}
+.plate i{background:#0b3d91;color:#fff;font:600 9px sans-serif;padding:3px 5px;display:flex;align-items:flex-end;font-style:normal}
+.plate b{padding:2px 9px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.sp{justify-content:space-between}
+.mut{color:var(--mut);font-size:14px}
+.btn{border:1px solid var(--acc);background:var(--acc);color:var(--accink);border-radius:12px;padding:12px 16px;font:inherit;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.g{background:transparent;color:var(--ink);border-color:var(--line)}.btn.w{width:100%}.btn.s{padding:8px 12px;font-size:14px;border-radius:10px}
+.g1{margin:10px 0}.g1 .top{display:flex;justify-content:space-between;font-size:15px;gap:8px}
+.trk{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin:4px 0}.trk div{height:100%;border-radius:9px}
+.c-ok{color:var(--ok)}.c-amb{color:var(--amb)}.c-bad{color:var(--bad)}
+.b-ok{background:var(--ok)}.b-amb{background:var(--amb)}.b-bad{background:var(--bad)}.b-none{background:var(--mut)}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:13px;border:1px solid var(--line);border-radius:99px;padding:2px 9px}
+.chip.dot:before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.tl{border-left:2px solid var(--line);margin-left:6px;padding-left:14px}
+.tl div{position:relative;padding-bottom:12px}.tl div:before{content:"";position:absolute;left:-20px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--acc)}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px}
+.lab{display:block;font-size:14px;color:var(--mut);margin:10px 0 4px}
+.chips input{position:absolute;opacity:0}
+.chips label,.st button{display:inline-block;padding:9px 14px;border:1px solid var(--line);border-radius:99px;margin:0 6px 6px 0;cursor:pointer;font:inherit;font-size:15px;color:var(--ink);background:transparent}
+.chips input:checked+label,.st button.on{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--card);width:100%;max-width:720px;border-radius:20px 20px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.login{max-width:380px;margin:8vh auto 0;padding:0 16px}
+.mfab{position:fixed;right:14px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:66px;height:66px;border-radius:50%;border:0;padding:0;background:#1c4fd8;box-shadow:0 4px 14px rgba(0,0,0,.3);z-index:6;cursor:pointer}
+.mfab svg{width:100%;height:100%;display:block}
+.mlab{position:fixed;right:88px;bottom:calc(92px + env(safe-area-inset-bottom,0px));background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px 10px;font-size:13px;z-index:6;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.bub{max-width:90%;padding:10px 12px;border-radius:14px;margin:8px 0;background:var(--bg);border:1px solid var(--line)}
+.bub.me{margin-left:auto;background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.lights{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:40vh;overflow:auto}
+.lt{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);padding:8px 4px;font:inherit;font-size:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.lt svg{width:44px;height:44px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.chips2{display:flex;flex-wrap:wrap;gap:8px}
+.chipb{border:1px solid var(--acc);color:var(--acc);background:transparent;border-radius:99px;padding:9px 13px;font:inherit;cursor:pointer}
+.warn{border:2px solid var(--bad);border-radius:12px;padding:10px}
+.bub{max-width:88%;padding:9px 12px;border-radius:14px;margin:8px 0;background:var(--card);border:1px solid var(--line)}
+.bub.me{margin-left:auto;background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.cbar{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);padding:8px;display:flex;gap:8px;align-items:center;z-index:5}
+.cbar input[type=text],.cbar input:not([type]){margin:0}
+.mi{position:fixed;left:0;right:0;bottom:calc(70px + env(safe-area-inset-bottom,0px));height:76px;z-index:30;pointer-events:none;overflow:hidden}
+.mi .road{position:absolute;left:0;right:0;bottom:0;height:3px;background:repeating-linear-gradient(90deg,rgba(128,128,128,.55) 0 18px,transparent 18px 34px);opacity:0;animation:miroad 5.6s forwards}
+@keyframes miroad{0%{opacity:0}8%,85%{opacity:.8}100%{opacity:0}}
+.mi .car{position:absolute;bottom:3px;left:0;width:120px;animation:micar 5.6s cubic-bezier(.22,.7,.3,1) forwards}
+.mi .car svg{width:100%;display:block;transform-origin:50% 100%;animation:mibob .28s ease-in-out infinite alternate}
+@keyframes mibob{to{transform:translateY(-2px) rotate(-.6deg)}}
+@keyframes micar{0%{transform:translateX(-150px) rotate(0)}38%{transform:translateX(calc(100vw - 205px)) rotate(0)}41%{transform:translateX(calc(100vw - 205px)) rotate(2.2deg)}46%{transform:translateX(calc(100vw - 205px)) rotate(0)}66%{transform:translateX(calc(100vw - 205px)) rotate(0)}100%{transform:translateX(calc(100vw + 40px)) rotate(0)}}
+.puff{position:absolute;left:2px;bottom:12px;width:9px;height:9px;border-radius:50%;background:rgba(150,150,150,.55);animation:mipuff .8s linear infinite}
+.puff:nth-child(2){animation-delay:.27s}.puff:nth-child(3){animation-delay:.54s}
+@keyframes mipuff{0%{transform:translate(0,0) scale(.5);opacity:.7}100%{transform:translate(-26px,-14px) scale(1.6);opacity:0}}
+.wh{transform-box:fill-box;transform-origin:center;animation:mispin .4s linear infinite}
+@keyframes mispin{to{transform:rotate(360deg)}}
+.mim{position:fixed;right:14px;bottom:calc(76px + env(safe-area-inset-bottom,0px));width:66px;height:66px;border-radius:50%;border:0;padding:0;background:#1c4fd8;z-index:31;box-shadow:0 4px 14px rgba(0,0,0,.3);opacity:0;animation:miout .9s 2.2s cubic-bezier(.3,1,.5,1) forwards,miwig 2.2s 3.3s ease-in-out infinite;cursor:pointer}
+.mim svg{width:100%;height:100%;display:block}
+.mim .wr{transform-box:fill-box;transform-origin:50% 90%;animation:miwr .55s 3.2s ease-in-out 6 alternate}
+@keyframes miwr{from{transform:rotate(-8deg)}to{transform:rotate(24deg)}}
+@keyframes miout{0%{opacity:0;transform:translate(-60px,0) scale(.3)}40%{opacity:1;transform:translate(-30px,-46px) scale(.95,1.1)}70%{opacity:1;transform:translate(-6px,-4px) scale(1.12,.88)}85%{transform:translate(0,-8px) scale(.97,1.04)}100%{opacity:1;transform:translate(0,0) scale(1)}}
+@keyframes miwig{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+.mib{position:fixed;right:88px;bottom:calc(100px + env(safe-area-inset-bottom,0px));background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:18px 18px 4px 18px;padding:10px 15px;font-size:17px;z-index:31;box-shadow:0 4px 14px rgba(0,0,0,.2);opacity:0;transform:scale(.5);transform-origin:100% 100%;animation:mibub .5s 3.1s cubic-bezier(.3,1.5,.5,1) forwards,mifloat 2.6s 3.7s ease-in-out infinite;cursor:pointer}
+@keyframes mibub{to{opacity:1;transform:scale(1)}}
+@keyframes mifloat{0%,100%{opacity:1;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.spk{position:fixed;font-style:normal;color:#ffc107;font-size:18px;opacity:0;z-index:31;animation:mispark .9s 3s ease-out forwards}
+.spk.a{right:84px;bottom:calc(150px + env(safe-area-inset-bottom,0px))}.spk.b{right:20px;bottom:calc(150px + env(safe-area-inset-bottom,0px));animation-delay:3.15s}.spk.c{right:96px;bottom:calc(92px + env(safe-area-inset-bottom,0px));animation-delay:3.3s}
+@keyframes mispark{0%{opacity:0;transform:scale(.2) rotate(0)}40%{opacity:1;transform:scale(1.3) rotate(90deg)}100%{opacity:0;transform:scale(.6) rotate(180deg)}}
+@media (prefers-reduced-motion:reduce){.mi{display:none}}
+svg .wv{transform-box:view-box;transform-origin:12px 55px;animation:miwave 6s ease-in-out infinite}
+@keyframes miwave{0%,68%,100%{transform:rotate(0)}72%{transform:rotate(-30deg)}76%{transform:rotate(14deg)}80%{transform:rotate(-30deg)}84%{transform:rotate(14deg)}88%{transform:rotate(-24deg)}94%{transform:rotate(0)}}
+svg .ey{transform-box:fill-box;transform-origin:center;animation:miblink 4.5s infinite}
+@keyframes miblink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
+.mfab{animation:mibreath 3.2s ease-in-out infinite}
+@keyframes mibreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.spin{width:34px;height:34px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--acc);animation:mispin .8s linear infinite}
+
+.hm{margin:-6px -14px 0;padding:calc(18px + env(safe-area-inset-top,0px)) 18px 20px;background:linear-gradient(160deg,var(--acc),#0a1f4a);color:#fff;border-radius:0 0 26px 26px}
+.hm .t1{font-size:14px;opacity:.85}.hm h2{font-size:26px;margin:2px 0 12px;color:#fff}
+.hv{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:11px 13px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.hv small{display:block;opacity:.8;font-size:12px}.hv b{font-size:15px}
+.hv .okp{margin-left:auto;background:rgba(74,222,128,.22);color:#bbf7d0;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:600}
+.hv .wp{margin-left:auto;background:rgba(251,191,36,.25);color:#fde68a;border-radius:99px;padding:3px 10px;font-size:12px;font-weight:600}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px}
+.tl2{position:relative;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:14px 4px 12px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;min-height:104px}
+.tl2 i{font-style:normal;font-size:28px;width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.tl2.wide{grid-column:span 3;flex-direction:row;justify-content:flex-start;gap:14px;padding:14px 16px;font-size:17px;text-align:left;min-height:0;background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.tl2.wide small{display:block;font-weight:400;opacity:.85;font-size:13px}
+.tl2 .bdg{top:6px;left:auto;right:10px}
+.k1 i{background:rgba(37,99,235,.18)}.k2 i{background:rgba(245,158,11,.22)}.k3 i{background:rgba(16,185,129,.2)}.k4 i{background:rgba(236,72,153,.18)}.k5 i{background:rgba(139,92,246,.2)}.k6 i{background:rgba(6,182,212,.2)}
+.tl2.wide i{background:rgba(255,255,255,.22)}
+</style>
+</head>
+<body>
+<div id="app"><div style="min-height:100vh;display:flex;align-items:center;justify-content:center"><div class="spin"></div></div></div>
+<script>
+const SB_URL="https://eewonbzybdlklkfjferr.supabase.co",SB_KEY="sb_publishable_Borwv6eFwhqOwBRFQRng8Q_3NBpkDr0";
+const sb=window.supabase?window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,storage:window.localStorage}}):null;
+const TX={ro:{email:"Email",pass:"Parolă (minim 8 caractere)",login:"Intră în cont",signup:"Creează cont",haveAcc:"Am deja cont",newAcc:"Nu am cont",code:"Cod de înscriere",codeInfo:"Introdu codul primit de la service ca să-ți legi contul.",link:"Leagă contul",logout:"Ieși din cont",wrongRole:"Acest cont este pentru service. Folosește aplicația de service.",confirmMail:"Verifică emailul ca să confirmi contul, apoi intră în cont.",cars:"Mașinile mele",appts:"Programări",msgs:"Mesaje",me:"Profil",addCar:"Adaugă mașină",plate:"Număr înmatriculare",country:"Țara numărului",make:"Marcă",model:"Model",year:"An",vin:"Serie șasiu (VIN, opțional)",save:"Salvează",cancel:"Anulează",back:"Înapoi",pending:"Așteaptă confirmarea service-ului",noCars:"Nu ai nicio mașină încă.",inShop:"În service acum",eta:"Termen estimat",oil:"Ulei",belt:"Curea",late:"Depășit cu {n}",left:"Mai sunt {n}",soon:"Scadent luna aceasta",nodata:"Fără date",mo1:"lună",mo:"luni",kmor:"sau la {n} km",hist:"Istoric",noHist:"Nicio intervenție încă.",book:"Programează",received:"Primită",diagnosing:"Diagnosticare",waiting_parts:"Așteaptă piese",in_progress:"În lucru",ready:"Gata de ridicat",delivered:"Predată",oilJob:"Schimb ulei",beltJob:"Curea distribuție",rev:"Revizie",other:"Altele",newAppt:"Cere o programare",car:"Mașina",date:"Data dorită",time:"Ora (opțional)",reason:"Motiv",more:"Detalii (opțional)",send:"Trimite cererea",approved:"Aprobată",refused:"Refuzată",waiting:"În așteptare",noAppt:"Nicio programare.",sent:"Cererea a fost trimisă. Service-ul îți va răspunde.",noMsgs:"Niciun mesaj.",offer:"Ofertă",msg:"Mesaj",isNew:"Nou",until:"Valabilă până la {d}",hi:"Salut, {n}",lang:"Limba",mine:"Datele tale",noCar:"Adaugă întâi o mașină.",idLabel:"Telefon, număr de mașină sau email",idHint:"ex. 0740 123 456 sau B 123 ABC",forgot:"Am uitat parola",firstTime:"Prima dată aici? Creează cont",createInfo:"Codul ți-l dă service-ul. După ce îți faci contul, vei intra cu telefonul sau numărul mașinii și parola.",resetInfo:"Cere service-ului un cod nou, apoi alege o parolă nouă.",newPass:"Parolă nouă (minim 8 caractere)",resetBtn:"Schimbă parola",resetOk:"Parola a fost schimbată. Poți intra în cont.",noAcc:"Nu am găsit niciun cont cu acest telefon sau număr de mașină. Verifică datele sau creează cont.",backLogin:"Înapoi la autentificare",newClient:"Nu sunt în baza service-ului – sunt client nou",nameLbl:"Numele tău",phoneLbl:"Telefon",createNew:"Creează cont nou",newInfo:"Nu ai primit un cod de la service? Îți faci singur cont, iar service-ul îți vede datele și îți confirmă mașina."},
+en:{email:"Email",pass:"Password (min. 8 characters)",login:"Log in",signup:"Create account",haveAcc:"I already have an account",newAcc:"I don't have an account",code:"Sign-up code",codeInfo:"Enter the code you got from the workshop to link your account.",link:"Link account",logout:"Log out",wrongRole:"This account is for the workshop. Use the workshop app.",confirmMail:"Check your email to confirm the account, then log in.",cars:"My cars",appts:"Bookings",msgs:"Messages",me:"Profile",addCar:"Add car",plate:"Plate number",country:"Plate country",make:"Make",model:"Model",year:"Year",vin:"VIN (optional)",save:"Save",cancel:"Cancel",back:"Back",pending:"Waiting for the workshop to confirm",noCars:"You have no cars yet.",inShop:"In the workshop now",eta:"Estimated completion",oil:"Oil",belt:"Belt",late:"Overdue by {n}",left:"{n} left",soon:"Due this month",nodata:"No data",mo1:"month",mo:"months",kmor:"or at {n} km",hist:"History",noHist:"No service yet.",book:"Book a visit",received:"Received",diagnosing:"Diagnosing",waiting_parts:"Waiting for parts",in_progress:"In progress",ready:"Ready for pickup",delivered:"Delivered",oilJob:"Oil change",beltJob:"Timing belt",rev:"Service",other:"Other",newAppt:"Request a booking",car:"Car",date:"Wanted date",time:"Time (optional)",reason:"Reason",more:"Details (optional)",send:"Send request",approved:"Approved",refused:"Refused",waiting:"Pending",noAppt:"No bookings.",sent:"Request sent. The workshop will reply.",noMsgs:"No messages.",offer:"Offer",msg:"Message",isNew:"New",until:"Valid until {d}",hi:"Hi, {n}",lang:"Language",mine:"Your details",noCar:"Add a car first.",idLabel:"Phone, plate number or email",idHint:"e.g. 0740 123 456 or B 123 ABC",forgot:"I forgot my password",firstTime:"First time here? Create account",createInfo:"The workshop gives you the code. After creating the account you log in with your phone or plate number and password.",resetInfo:"Ask the workshop for a new code, then choose a new password.",newPass:"New password (min. 8 characters)",resetBtn:"Change password",resetOk:"Password changed. You can log in now.",noAcc:"No account found with this phone or plate number. Check it or create an account.",backLogin:"Back to log in",newClient:"I am not in the workshop database – new client",nameLbl:"Your name",phoneLbl:"Phone",createNew:"Create new account",newInfo:"No code from the workshop? Create your own account; the workshop will see your details and confirm your car."}};
+let LG=localStorage.getItem("ac_lang")||((navigator.language||"ro").startsWith("ro")?"ro":"en");
+const t=(k,v)=>{let s=TX[LG][k]||k;if(v)for(const x in v)s=s.replace("{"+x+"}",v[x]);return s};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fd=d=>new Date(d).toLocaleDateString(LG==="ro"?"ro-RO":"en-GB");
+let ME=null,D={client:null,cars:[],jobs:[],appointments:[],visits:[],notifications:[],client_questions:[],requests:[],chat_messages:[]};
+const U={tab:"home",carId:null,form:null,set:null};
+const COUNTRIES=[["RO","România"],["MD","Moldova"],["BG","Bulgaria"],["HU","Ungaria"],["UA","Ucraina"],["DE","Germania"],["AT","Austria"],["IT","Italia"],["FR","Franța"],["ES","Spania"],["GB","Marea Britanie"],["NL","Olanda"],["BE","Belgia"],["PL","Polonia"],["GR","Grecia"],["TR","Turcia"],["CH","Elveția"],["INT","Altă țară"]];
+const homeCountry=()=>{try{const m=(navigator.language||"").match(/-([A-Za-z]{2})$/);if(m&&COUNTRIES.some(c=>c[0]===m[1].toUpperCase()))return m[1].toUpperCase();if(/Bucharest/.test(Intl.DateTimeFormat().resolvedOptions().timeZone))return"RO"}catch(e){}return"RO"};
+const ST=["received","diagnosing","waiting_parts","in_progress","ready","delivered"];
+const car=id=>D.cars.find(c=>c.id===id);
+const jobsOf=id=>D.jobs.filter(j=>j.car_id===id).sort((a,b)=>b.done_on.localeCompare(a.done_on));
+const visitOf=id=>D.visits.find(v=>v.car_id===id&&!v.closed_at&&v.status!=="delivered");
+const addY=(s,n)=>{const d=new Date(s);d.setFullYear(d.getFullYear()+n);return d.toISOString().slice(0,10)};
+const mon=n=>n+" "+(n==1?t("mo1"):t("mo"));
+const jt=x=>x==="oil"?t("oilJob"):x==="belt"?t("beltJob"):t("other");
+function info(c,type){
+ const j=jobsOf(c.id).find(x=>x.type===type),total=type==="oil"?12:24,label=t(type);
+ if(!j)return{s:"none",txt:t("nodata"),pct:0,label};
+ const left=(new Date(addY(j.done_on,total/12))-Date.now())/(30.44*864e5),s=left<0?"bad":left<1?"amb":"ok";
+ let txt=left<0?t("late",{n:mon(Math.ceil(-left))}):left<1?t("soon"):t("left",{n:mon(Math.floor(left))});
+ if(type==="belt")txt+=" · "+t("kmor",{n:(j.km+60000).toLocaleString(LG==="ro"?"ro-RO":"en-GB")});
+ return{s,txt,label,pct:Math.max(6,Math.min(100,(total-left)/total*100))};
+}
+const gauge=(c,x)=>{const i=info(c,x);return `<div class="g1"><div class="top"><b>${i.label}</b><span class="c-${i.s}">${i.txt}</span></div><div class="trk"><div class="b-${i.s}" style="width:${i.pct}%"></div></div></div>`};
+const SIL='<svg viewBox="0 0 200 80"><path d="M10 58Q12 44 30 40L55 24Q60 20 70 20H125Q135 20 142 28L160 40Q184 43 190 56V62H10Z" fill="currentColor" opacity=".3"/><circle cx="52" cy="62" r="12" fill="currentColor" opacity=".6"/><circle cx="148" cy="62" r="12" fill="currentColor" opacity=".6"/></svg>';
+const plate=(p,c)=>`<span class="plate"><i>${esc(c||"RO")}</i><b>${esc(p)}</b></span>`;
+
+const pw=(n,ac,x="")=>`<div style="position:relative"><input name="${n}" type="password" autocomplete="${ac}" ${x} style="padding-right:50px"><button type="button" aria-label="Arată / ascunde parola" onclick="tgl(this)" style="position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;font-size:20px;cursor:pointer;padding:8px">👁️</button></div>`;
+function tgl(b){const i=b.previousElementSibling,s=i.type==="password";i.type=s?"text":"password";b.textContent=s?"🙈":"👁️"}
+function errMsg(m){
+ const r=LG==="ro";m=String(m||"");
+ if(/Invalid login credentials/i.test(m))return r?"Email sau parolă greșite.":"Wrong email or password.";
+ if(/Email not confirmed/i.test(m))return r?"Contul nu e confirmat. Service-ul trebuie să oprească confirmarea prin email, sau confirmă emailul.":"Account not confirmed yet.";
+ if(/already registered|already been registered/i.test(m))return r?"Există deja un cont cu acest email. Apasă „Am deja cont”.":"An account with this email already exists. Tap “I already have an account”.";
+ if(/rate limit|too many/i.test(m))return r?"Prea multe încercări. Așteaptă puțin și încearcă din nou.":"Too many attempts. Wait a bit and try again.";
+ if(/at least \d+ char/i.test(m))return r?"Parola trebuie să aibă cel puțin 8 caractere.":"Password must be at least 8 characters.";
+ if(/Numar masina nepotrivit/i.test(m))return r?"Numărul mașinii nu se potrivește cu telefonul. Verifică și încearcă din nou, sau sună service-ul.":"The plate number does not match this phone. Check it and try again, or call the workshop.";
+ if(/Cont fara client/i.test(m))return r?"Acest cont nu e legat de un client. Ieși din cont și creează unul nou cu telefonul tău.":"This account is not linked to a client. Log out and create a new one with your phone.";
+ if(/Clientul are deja un cont/i.test(m))return r?"Acest client are deja un cont. Intră în cont cu telefonul și parola.":"This client already has an account. Log in with your phone and password.";
+ if(/Cod invalid/i.test(m))return r?"Cod invalid. Cere un cod nou de la service.":"Invalid code. Ask the workshop for a new one.";
+ if(/Telefon existent/i.test(m))return r?"Numărul tău este deja în baza service-ului. Cere-i service-ului codul de înscriere (apoi „Creează cont”) sau intră în cont.":"Your phone number is already in the workshop database. Ask the workshop for a sign-up code or log in.";
+ if(/Telefon invalid/i.test(m))return r?"Număr de telefon invalid.":"Invalid phone number.";
+ if(/Nume invalid/i.test(m))return r?"Scrie numele tău.":"Enter your name.";
+ if(/client_questions|relation .* does not exist/i.test(m))return r?"Lipsește actualizarea 5 a bazei de date. Spune-i service-ului.":"Database update 5 is missing.";
+ if(/Clientul nu are cont/i.test(m))return r?"Acest client nu are încă cont. Folosește „Creează cont”.":"This client has no account yet. Use “Create account”.";
+ if(/cel putin 8/i.test(m))return r?"Parola trebuie să aibă cel puțin 8 caractere.":"Password must be at least 8 characters.";
+ if(/claim_client|claim_me|login_identity|signup_identity|signup_info|reset_password|schema cache|find the function/i.test(m))return r?"Lipsește o actualizare a bazei de date (autoserv-update-3 sau 4). Spune-i service-ului.":"A database update is missing (update 3 or 4).";
+ return m;
+}
+function langBtns(){return `<div class="st"><button class="${LG==="ro"?"on":""}" onclick="setLang('ro')">Română</button><button class="${LG==="en"?"on":""}" onclick="setLang('en')">English</button></div>`}
+function setLang(l){LG=l;try{localStorage.setItem("ac_lang",l)}catch(e){}ME?render():(U.auth?U.auth():authView())}
+function authView(msg,mode,ok){
+ mode=mode||"in";if(mode==="new")mode="up";U.auth=()=>authView("",mode);
+ if(mode!=="up")U.pre=null;
+ const head=`<div class="brand" style="font-size:34px;margin-bottom:4px">${brandH()}</div>${credit("0 0 10px")}${langBtns()}`;
+ let f="",btn="",sw="";const pre=U.pre||{};
+ const bk=`<button type="button" class="btn g w" style="margin-top:10px;border:0" onclick="authView('','in')">${t("backLogin")}</button>`;
+ if(mode==="in"){
+  f=`<label class="lab">${L2("Număr de telefon","Phone number")}</label><input name="id" type="tel" inputmode="tel" autocomplete="username" placeholder="07xx xxx xxx" value="${esc(localStorage.getItem("ac_id")||"")}" required style="font-size:18px"><label class="lab">${L2("Parolă","Password")}</label>${pw("password","current-password",'required')}`;
+  btn=t("login");
+  sw=`<button type="button" class="btn g w" style="margin-top:10px" onclick="authView('','up')">${L2("Creează cont","Create account")}</button><button type="button" class="btn g w" style="margin-top:8px;border:0" onclick="authView('','reset')">${t("forgot")}</button>`;
+ }else if(mode==="up"){
+  if(pre.needPlate){
+   f=`<p>${L2("Te-am găsit în baza service-ului. Scrie numărul unei mașini a tale, ca să confirmăm că ești tu.","We found you in the workshop database. Enter the plate number of one of your cars so we know it is you.")}</p><input type="hidden" name="name" value="${esc(pre.name)}"><input type="hidden" name="phone" value="${esc(pre.phone)}"><input type="hidden" name="password" value="${esc(pre.password)}"><label class="lab">${t("plate")}</label><input name="plate" autocapitalize="characters" placeholder="CJ 22 PPT" required style="font-size:20px;text-transform:uppercase;letter-spacing:.1em">`;
+   btn=L2("Confirmă și creează cont","Confirm and create account");
+  }else{
+   f=`<label class="lab">${t("nameLbl")}</label><input name="name" autocomplete="name" value="${esc(pre.name||"")}" required><label class="lab">${t("phoneLbl")}</label><input name="phone" type="tel" inputmode="tel" autocomplete="tel" value="${esc(pre.phone||"")}" required><label class="lab">${L2("Parolă (minim 8 caractere)","Password (min. 8 characters)")}</label>${pw("password","new-password",'minlength="8" required')}`;
+   btn=L2("Creează cont","Create account");
+  }
+  sw=bk;
+ }else{
+  f=`<p class="mut">${L2("Scrie telefonul și numărul unei mașini a tale, apoi alege o parolă nouă.","Enter your phone and the plate number of one of your cars, then choose a new password.")}</p><label class="lab">${L2("Număr de telefon","Phone number")}</label><input name="phone" type="tel" inputmode="tel" required><label class="lab">${t("plate")}</label><input name="plate" autocapitalize="characters" placeholder="CJ 22 PPT" required style="text-transform:uppercase"><label class="lab">${t("newPass")}</label>${pw("password","new-password",'minlength="8" required')}`;
+  btn=t("resetBtn");sw=bk;
+ }
+ $("app").innerHTML=`<div class="login">${head}<form onsubmit="return doAuth(event,'${mode}')">${f}<p class="${ok?"c-ok":"c-bad"}" id="lm">${esc(msg||"")}</p><button class="btn w">${btn}</button></form>${sw}</div>`;
+}
+async function doAuth(e,mode){
+ e.preventDefault();const v=Object.fromEntries(new FormData(e.target));
+ try{
+  if(mode==="in"){
+   const id=(v.id||"").trim();let email=id;
+   if(!id.includes("@")){
+    const r=await sb.rpc("login_identity",{p_id:id});
+    if(r.error){authView(errMsg(r.error.message),mode);return false}
+    email=r.data;if(!email){authView(t("noAcc"),mode);return false}
+   }
+   try{localStorage.setItem("ac_id",id)}catch(x){}
+   const {error}=await sb.auth.signInWithPassword({email,password:v.password});
+   if(error){authView(errMsg(error.message),mode);return false}
+   await boot();
+  }else if(mode==="up"){
+   if(v.plate){
+    const r=await sb.rpc("signup_identity2",{p_phone:v.phone,p_plate:v.plate});
+    if(r.error){U.pre={name:v.name,phone:v.phone,password:v.password,needPlate:true};authView(errMsg(r.error.message),mode);return false}
+    const {data,error}=await sb.auth.signUp({email:r.data,password:v.password});
+    if(error){authView(errMsg(error.message),mode);return false}
+    if(!data.session){authView(t("confirmMail"),"in");return false}
+    const c=await sb.rpc("claim_client2",{p_phone:v.phone,p_plate:v.plate});
+    if(c.error){await sb.auth.signOut();U.pre={name:v.name,phone:v.phone,password:v.password,needPlate:true};authView(errMsg(c.error.message),mode);return false}
+    try{localStorage.setItem("ac_id",v.phone)}catch(x){}
+    U.pre=null;await boot();return false;
+   }
+   const inf=await sb.rpc("signup_info",{p_phone:v.phone});
+   if(inf.error){U.pre={name:v.name,phone:v.phone};authView(errMsg(inf.error.message),mode);return false}
+   if(inf.data==="has_account"){try{localStorage.setItem("ac_id",v.phone)}catch(x){}U.pre=null;authView(L2("Ai deja cont. Intră cu telefonul și parola.","You already have an account. Log in with your phone and password."),"in",true);return false}
+   if(inf.data==="existing"){U.pre={name:v.name,phone:v.phone,password:v.password,needPlate:true};authView("",mode);return false}
+   const r=await sb.rpc("register_new_client",{p_name:v.name,p_phone:v.phone});
+   if(r.error){authView(errMsg(r.error.message),mode);return false}
+   const {data,error}=await sb.auth.signUp({email:r.data.email,password:v.password});
+   if(error){authView(errMsg(error.message),mode);return false}
+   if(!data.session){authView(t("confirmMail"),"in");return false}
+   const c=await sb.rpc("claim_me");
+   if(c.error){claimView(errMsg(c.error.message));return false}
+   try{localStorage.setItem("ac_id",v.phone)}catch(x){}
+   U.pre=null;await boot();try{sendPush(ME.client_id,"👤 Client nou",v.name+" · "+v.phone)}catch(x){}
+  }else{
+   const r=await sb.rpc("reset_password2",{p_phone:v.phone,p_plate:v.plate,p_pw:v.password});
+   if(r.error){authView(errMsg(r.error.message),mode);return false}
+   authView(t("resetOk"),"in",true);
+  }
+ }catch(x){authView(errMsg(x.message),mode)}
+ return false;
+}
+function claimView(msg){
+ U.auth=()=>claimView("");
+ $("app").innerHTML=`<div class="login"><div class="brand" style="font-size:32px;margin-bottom:4px">${brandH()}</div>${credit("0 0 10px")}${langBtns()}<p>${L2("Contul tău nu s-a legat încă. Apasă butonul de mai jos.","Your account is not linked yet. Tap the button below.")}</p><p class="c-bad">${esc(msg||"")}</p><button class="btn w" onclick="U.claimTried=false;boot()">${L2("Încearcă din nou","Try again")}</button><button class="btn g w" style="margin-top:10px" onclick="logout()">${t("logout")}</button></div>`;
+}
+async function doClaim(e){
+ e.preventDefault();const {error}=await sb.rpc("claim_client",{p_code:new FormData(e.target).get("code")});
+ if(error){claimView(errMsg(error.message));return false}
+ await boot();return false;
+}
+async function logout(){await sb.auth.signOut();ME=null;authView()}
+async function boot(){
+ try{
+  const {data:p,error}=await sb.from("profiles").select("workshop_id,role,client_id").maybeSingle();
+  if(error){authView(error.message);return}
+  if(!p){
+   if(U.claimTried){claimView(U.claimErr||"");return}
+   U.claimTried=true;const cm=await sb.rpc("claim_me");
+   if(cm.error){U.claimErr=errMsg(cm.error.message);claimView(U.claimErr);return}
+   return boot();
+  }
+  if(p.role!=="client"){await sb.auth.signOut();authView(t("wrongRole"));return}
+  ME=p;await load();playIntro();render();pushState().then(s=>{if(PS!==s){PS=s;render()}});
+ }catch(x){authView(x.message)}
+}
+const credit=(m)=>`<div class="mut" style="font-size:12px;margin:${m||"14px 0 0"}"><span style="cursor:pointer" onclick="const n=this.nextElementSibling;n.hidden=!n.hidden">by <b>Wellcar</b></span><span hidden> · <a href="tel:+40752317435" style="color:inherit">📞 +40 752 317 435</a></span></div>`;
+
+const VAPID="BCWOUn1wUqUWLDAbknBsbrcJ2kyCdyFLu5ztuehe8omWRgzLCO2Zll_TkwQAEDHdQltQbQTXnoQd0N-D5y2j3-o";
+let PS="?";
+const u8=b=>{const p="=".repeat((4-b.length%4)%4),s=(b+p).replace(/-/g,"+").replace(/_/g,"/"),r=atob(s);return Uint8Array.from([...r].map(c=>c.charCodeAt(0)))};
+async function pushState(){
+ if(!("serviceWorker" in navigator)||!("PushManager" in window)||!("Notification" in window))return"unsupported";
+ if(Notification.permission==="denied")return"denied";
+ try{const reg=await navigator.serviceWorker.ready;const s=await reg.pushManager.getSubscription();return s&&Notification.permission==="granted"?"on":"off"}catch(e){return"off"}
+}
+async function enablePush(){
+ try{
+  if(!("serviceWorker" in navigator)||!("PushManager" in window)||!("Notification" in window)){alert("Acest browser nu permite notificări. Pe iPhone instalează mai întâi aplicația pe ecranul principal (Safari, Partajare, Adaugă pe ecranul principal) și deschide-o de acolo.");return}
+  const perm=await Notification.requestPermission();
+  if(perm!=="granted"){alert("Notificările nu au fost permise. Le poți permite din setările browserului, la permisiunile site-ului.");PS=await pushState();render();return}
+  const reg=await navigator.serviceWorker.ready;
+  let sub=await reg.pushManager.getSubscription();
+  if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID)});
+  const j=sub.toJSON();
+  const {error}=await sb.rpc("save_push",{p_endpoint:j.endpoint,p_p256dh:j.keys.p256dh,p_auth:j.keys.auth});
+  if(error){alert(error.message);return}
+  PS="on";alert("Notificările sunt active pe acest telefon.");render();
+ }catch(e){alert("Nu am putut activa notificările: "+(e.message||e))}
+}
+async function disablePush(){
+ try{const reg=await navigator.serviceWorker.ready;const s=await reg.pushManager.getSubscription();if(s){await sb.from("push_subs").delete().eq("endpoint",s.endpoint);await s.unsubscribe()}PS="off";render()}catch(e){alert(e.message||e)}
+}
+function sendPush(client_id,title,body){
+ try{sb.auth.getSession().then(({data:{session}})=>{if(!session)return;fetch(SB_URL+"/functions/v1/push",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token,"apikey":SB_KEY},body:JSON.stringify({client_id,title,body})}).catch(()=>{})})}catch(e){}
+}
+const pushBanner=()=>PS==="off"?`<div class="card tap row sp" onclick="enablePush()"><b>🔔 Activează notificările pe telefon</b><span>›</span></div>`:"";
+const pushTxt=()=>({on:"Active",off:"Oprite",denied:"Blocate în browser",unsupported:"Nu sunt disponibile în acest browser","?":"…"}[PS]);
+
+let DIP=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();DIP=e;try{if(typeof ME!=="undefined"&&ME&&!U.form&&!B.open)render()}catch(x){}});
+window.addEventListener("appinstalled",()=>{DIP=null});
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent),isStandalone=(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;
+function installNow(){
+ if(isStandalone){alert("Aplicația este deja instalată pe acest telefon.");return}
+ if(DIP){doInstall();return}
+ alert(isIOS?"Pe iPhone, în Safari:\n1. Apasă ••• (jos, dreapta), apoi Distribuie.\n2. Apasă ⌄ și alege „Adaugă pe ecranul principal”.\n3. Pornește „Deschide ca aplicație web” și apasă Adaugă.\n\nDacă ești în Chrome, copiază linkul și deschide-l în Safari.":"Pe Android, în Chrome:\n1. Apasă ⋮ (cele trei puncte, sus dreapta).\n2. Alege „Instalează aplicația” sau „Adaugă pe ecranul de pornire”.\n3. Apasă Instalează.\n\nDacă nu apare, deschide linkul în Chrome (nu în browserul altei aplicații).");
+}
+async function doInstall(){if(!DIP)return;DIP.prompt();try{await DIP.userChoice}catch(e){}DIP=null;render()}
+const installBanner=()=>isStandalone?"":DIP?`<div class="card tap row sp" onclick="doInstall()"><b>📲 ${L2("Instalează aplicația pe telefon","Install the app on your phone")}</b><span>›</span></div>`:isIOS?`<div class="card" style="border-color:var(--acc);border-width:2px"><b>📲 ${L2("Instalează aplicația pe iPhone","Install the app on iPhone")}</b>${/CriOS|FxiOS|EdgiOS|OPiOS/.test(navigator.userAgent)?`<div style="margin:8px 0;color:var(--bad)"><b>${L2("Ești în Chrome. Deschide linkul în Safari (copiază-l și lipește-l în Safari).","You are in Chrome. Open the link in Safari (copy it and paste it in Safari).")}</b></div>`:""}<ol style="margin:8px 0 0 20px;padding:0;line-height:1.7"><li>${L2("Apasă ••• sau butonul Distribuie ⬆️","Tap ••• or the Share button ⬆️")}</li><li>${L2("Apasă „Distribuie”, apoi „Adaugă pe ecranul principal”","Tap “Share”, then “Add to Home Screen”")}</li><li>${L2("Apasă „Adaugă”","Tap “Add”")}</li></ol></div>`:`<div class="card tap row sp" onclick="installNow()"><b>📲 ${L2("Instalează aplicația pe telefon","Install the app on your phone")}</b><span>›</span></div>`;
+const brandH=(big,def)=>{let n=def||"WellCar",b="";try{const w=D.ws||JSON.parse(localStorage.getItem("ac_ws")||"null");if(w&&w.name){n=w.name;b=w.byline||""}}catch(e){}return esc(n)+(b?`<span style="display:block;font-size:${big?14:12}px;font-weight:400;font-family:Barlow,system-ui,sans-serif;color:var(--mut)">${esc(b)}</span>`:"")};
+async function load(){
+ const names=["cars","jobs","appointments","visits","notifications","client_questions","requests","chat_messages"];
+ const r=await Promise.all(names.map(n=>sb.from(n).select("*")).concat([sb.from("clients").select("*").maybeSingle()]));
+ r.forEach((x,i)=>{if(x.error)alert(x.error.message);else if(i<names.length)D[names[i]]=x.data;else D.client=x.data});
+ try{const w=await sb.from("workshops").select("*").maybeSingle();if(!w.error&&w.data){D.ws=w.data;localStorage.setItem("ac_ws",JSON.stringify({name:w.data.name,byline:w.data.byline}));if(w.data.name)document.title=w.data.name}}catch(e){}
+}
+async function run(p){const {error}=await p;if(error){alert(error.message);return false}await load();render();return true}
+
+function carCard(c){
+ const v=visitOf(c.id);
+ return `<div class="card tap" onclick="U.carId='${c.id}';render();scrollTo(0,0)"><div class="hero">${SIL}${plate(c.plate,c.country)}</div><div class="row sp" style="margin-top:10px"><h3>${esc(c.make)} ${esc(c.model)} <span class="mut">${esc(c.year)}</span></h3>${v?`<span class="chip c-amb">${t(v.status)}</span>`:""}</div><div class="row" style="margin-top:6px">${c.confirmed?["oil","belt"].map(x=>{const i=info(c,x);return `<span class="chip dot c-${i.s}"><span style="color:var(--ink)">${i.label}</span></span>`}).join(" "):`<span class="mut">${t("pending")}</span>`}</div></div>`;
+}
+function homeView(){
+ const n=((D.client||{}).name||"").split(" ")[0];
+ const today=new Date().toISOString().slice(0,10);
+ const AP=D.appointments.filter(a=>a.status!=="no");
+ const up=AP.filter(a=>a.wanted_on>=today).sort((a,b)=>a.wanted_on.localeCompare(b.wanted_on))[0];
+ const c0=up?car(up.car_id):D.cars[0];
+ const bd=D.notifications.filter(x=>x.created_at>seen()).length,cu=chatUnread();
+ const ws=(()=>{try{const w=D.ws||JSON.parse(localStorage.getItem("ac_ws")||"null");return (w&&w.name)||"WellCar"}catch(e){return"WellCar"}})();
+ const card=up?`<div class="hv">${plate(c0?c0.plate:"?",c0&&c0.country)}<div><small>${L2("Următoarea programare","Next appointment")}</small><b>${fd(up.wanted_on)}${up.wanted_time?" · "+up.wanted_time.slice(0,5):""}</b></div><span class="${up.status==="ok"?"okp":"wp"}">${up.status==="ok"?L2("Confirmată","Confirmed"):L2("În așteptare","Waiting")}</span></div>`
+  :(c0?`<div class="hv">${plate(c0.plate,c0.country)}<div><small>${esc(c0.make)} ${esc(c0.model)}</small><b>${L2("Nicio programare","No appointment")}</b></div></div>`
+  :`<div class="hv tap" onclick="op('car')"><div><small>${L2("Nu ai nicio mașină încă","No car yet")}</small><b>${L2("Adaugă prima mașină","Add your first car")}</b></div></div>`);
+ const T=(k,ic,lb,fn,b)=>`<button class="tl2 ${k}" onclick="${fn}"><i>${ic}</i>${lb}${b?`<b class="bdg">${b}</b>`:""}</button>`;
+ return `<div class="hm"><div class="t1">${esc(ws)}</div><h2>${t("hi",{n:esc(n)})}</h2>${card}</div>${installBanner()}${PS==="off"?`<div class="card tap row sp" onclick="enablePush()"><b>🔔 ${L2("Activează notificările","Turn on notifications")}</b><span>›</span></div>`:""}
+ <div class="tiles"><button class="tl2 wide" onclick="op('appt')"><i>📅</i><div>${t("newAppt")}<small>${L2("Alege ziua și ora","Pick day and time")}</small></div></button>
+ ${T("k2","💬","Chat","U.tab='chat';render()",cu)}${T("k3","🔧",L2("Mecanicul meu","My mechanic"),"openBot()")}${T("k4","🧩",L2("Cere o piesă","Request a part"),"op('req')")}
+ ${T("k5","🚗",t("cars"),"U.tab='cars';render()")}${T("k1","📅",t("appts"),"U.tab='appts';render()")}${T("k6","🔔",t("msgs"),"U.tab='msgs';render()",bd)}</div><button class="btn g w" style="margin-top:14px" onclick="op('car')">＋ ${t("addCar")}</button>`;
+}
+function carsView(){
+ const n=((D.client||{}).name||"").split(" ")[0];
+ return `<h2>${t("hi",{n:esc(n)})}</h2>${installBanner()}${PS==="off"?`<div class="card tap row sp" onclick="enablePush()"><b>🔔 ${L2("Activează notificările","Turn on notifications")}</b><span>›</span></div>`:""}<div class="row" style="margin-bottom:6px"><button class="btn" style="flex:1" onclick="op('appt')">📅 ${t("newAppt")}</button><button class="btn g" onclick="op('car')">＋ ${t("addCar")}</button></div><h3 style="margin-top:14px">${t("cars")}</h3>${D.cars.length?D.cars.map(carCard).join(""):`<p class="mut">${t("noCars")}</p>`}`;
+}
+function carDetail(){
+ const c=car(U.carId),v=visitOf(c.id),h=jobsOf(c.id);
+ const vis=v?`<div class="card"><h3>${t("inShop")}</h3><div class="c-amb" style="font-size:22px;margin:8px 0"><b>${t(v.status)}</b></div><div class="trk"><div class="b-amb" style="width:${(ST.indexOf(v.status)+1)/6*100}%"></div></div>${v.eta?`<div style="margin-top:6px">${t("eta")}: <b>${fd(v.eta)}</b></div>`:""}${v.note?`<div class="mut" style="margin-top:6px">${esc(v.note)}</div>`:""}</div>`:"";
+ return `<button class="btn s g" onclick="U.carId=null;render()">‹ ${t("back")}</button><div class="card" style="margin-top:12px"><div class="hero big">${SIL}${plate(c.plate,c.country)}</div><h2 style="margin:12px 0 2px">${esc(c.make)} ${esc(c.model)} <span class="mut">${esc(c.year)}</span></h2>${c.confirmed?`<div style="margin-top:8px">${gauge(c,"oil")}${gauge(c,"belt")}</div><button class="btn w" onclick="op('appt','${c.id}')">📅 ${t("book")}</button>`:`<p class="mut">${t("pending")}</p>`}</div><div class="card"><div class="row sp"><h3>${L2("Datele mașinii","Car details")}</h3><button class="btn s g" onclick="editCar('${c.id}')">✏️ ${L2("Editează","Edit")}</button></div><div class="mut" style="margin-top:6px">VIN: ${c.vin?esc(c.vin):"—"}</div>${c.talon?`<img src="${c.talon}" alt="" onclick="showImg(this.src)" style="width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:8px">`:`<div class="mut" style="margin-top:6px">${L2("Poza talonului lipsește. Poți adăuga una oricând.","No registration photo yet. You can add one any time.")}</div>`}</div>${vis}${c.confirmed?`<h2>${t("hist")}</h2>${h.length?`<div class="tl">${h.map(j=>`<div><b>${fd(j.done_on)}</b> · ${Number(j.km).toLocaleString(LG==="ro"?"ro-RO":"en-GB")} km<br>${jt(j.type)}${j.details?" · "+esc(j.details):""}</div>`).join("")}</div>`:`<p class="mut">${t("noHist")}</p>`}`:""}`;
+}
+function apptsView(){
+ const L=D.appointments.slice().sort((a,b)=>b.wanted_on.localeCompare(a.wanted_on));
+ return `<h2>${t("appts")}</h2><button class="btn w" onclick="op('appt')">＋ ${t("newAppt")}</button>`+(L.length?L.map(a=>{const c=car(a.car_id),sc=a.status==="ok"?"ok":a.status==="no"?"bad":"amb";return `<div class="card"><div class="row sp">${plate(c?c.plate:"?",c&&c.country)}<span class="chip c-${sc}">${a.status==="ok"?t("approved"):a.status==="no"?t("refused"):t("waiting")}</span></div><div style="margin-top:8px"><b>${fd(a.wanted_on)}${a.wanted_time?" · "+a.wanted_time.slice(0,5):""}</b> · ${esc(a.note)}</div></div>`}).join(""):`<p class="mut" style="margin-top:12px">${t("noAppt")}</p>`);
+}
+const RS={new:["Trimisă","Sent","amb"],ordered:["Comandată","Ordered","amb"],arrived:["A sosit","Arrived","ok"],done:["Rezolvată","Done","ok"],refused:["Refuzată","Declined","bad"]};
+function myAsk(){
+ const R=D.requests.map(r=>({d:r.created_at,h:(()=>{const c=r.car_id&&car(r.car_id),s=RS[r.status]||RS.new;return `<div class="card"><div class="row sp"><b>🔧 ${esc(r.text)}</b><span class="chip c-${s[2]}">${L2(s[0],s[1])}</span></div>${c?`<div class="mut" style="margin-top:6px">${esc(c.plate)}</div>`:""}${r.note?`<div style="margin-top:6px">💬 ${esc(r.note)}</div>`:""}<div class="mut" style="margin-top:6px">${fd(r.created_at)}</div></div>`})()})),
+  Q=D.client_questions.map(q=>({d:q.created_at,h:`<div class="card"><div class="row sp"><b>❓ ${esc(q.question)}</b><span class="chip c-${q.answered?"ok":"amb"}">${q.answered?L2("Răspuns primit","Answered"):L2("Trimisă","Sent")}</span></div><div class="mut" style="margin-top:6px">${fd(q.created_at)}${q.answered?" · "+L2("Răspunsul e mai jos, la mesaje","The reply is below in the messages"):""}</div></div>`}));
+ const A=R.concat(Q).sort((a,b)=>b.d.localeCompare(a.d));
+ return A.length?`<h3 style="margin-top:14px">${L2("Cererile mele","My requests")}</h3>`+A.map(x=>x.h).join("")+`<h3 style="margin-top:14px">${L2("Mesaje de la service","Messages from the workshop")}</h3>`:"";
+}
+const seen=()=>localStorage.getItem("ac_seen")||"1970";
+function msgsView(){
+ const sn=seen(),L=D.notifications.slice().sort((a,b)=>b.created_at.localeCompare(a.created_at));
+ const h=`<h2>${t("msgs")}</h2><button class="btn w" onclick="op('req')">＋ ${L2("Cere o piesă / altă cerere","Request a part / other")}</button>`+myAsk()+(L.length?L.map(n=>`<div class="card ${n.kind==="offer"?"offer":""}"><div class="row sp"><span class="chip ${n.kind==="offer"?"c-ok":""}">${n.kind==="offer"?"🏷️ "+t("offer"):t("msg")}</span><span class="mut">${n.created_at>sn?`<b class="c-bad">${t("isNew")}</b> · `:""}${fd(n.created_at)}</span></div><h3 style="margin-top:8px">${esc(n.title)}</h3><div>${esc(n.body)}</div>${n.valid_until?`<div class="mut" style="margin-top:6px">${t("until",{d:fd(n.valid_until)})}</div>`:""}</div>`).join(""):`<p class="mut">${t("noMsgs")}</p>`);
+ try{localStorage.setItem("ac_seen",new Date().toISOString())}catch(e){}
+ return h;
+}
+
+const ACC=[["Albastru","Blue","#1c4fd8","#6b9bff"],["Verde","Green","#1f8a5b","#4fd08f"],["Portocaliu","Orange","#d9730d","#f0a04a"],["Roșu","Red","#c0392b","#ff7f6e"],["Violet","Purple","#6b3fd4","#a98bff"],["Grafit","Graphite","#2b3a4a","#9fb3c8"]];
+const svgURI=x=>'url("data:image/svg+xml,'+encodeURIComponent(x)+'")';
+const PAT={dots:svgURI('<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"><circle cx="4" cy="4" r="1.6" fill="rgba(128,128,128,.28)"/></svg>'),
+tools:svgURI('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="none" stroke="rgba(128,128,128,.24)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(35 30 30)"><path d="M30 14v40"/><circle cx="30" cy="10" r="6"/></g><g transform="translate(84 80)"><circle r="12"/><circle r="4"/><path d="M0-12v-6M0 12v6M-12 0h-6M12 0h6"/></g></svg>')};
+let TH={mode:"auto",acc:0,bg:"none",photo:null};try{TH=Object.assign(TH,JSON.parse(localStorage.getItem("ac_theme")))}catch(e){}
+function saveTh(){try{localStorage.setItem("ac_theme",JSON.stringify(TH))}catch(e){alert("Poza e prea mare ca să fie salvată pe acest dispozitiv.");TH.photo=null;TH.bg="none"}}
+function applyTheme(){
+ const r=document.documentElement.style,dk=TH.mode==="dark"||(TH.mode==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
+ const P=dk?{"--bg":"#0d1520","--card":"#162231","--ink":"#e9eef4","--mut":"#93a4b5","--line":"#263648","--ok":"#4fd08f","--amb":"#f0b04a","--bad":"#ff7f6e","--accink":"#0d1520"}:{"--bg":"#eef2f6","--card":"#fff","--ink":"#0f1b2d","--mut":"#5b6b7c","--line":"#d9e1e8","--ok":"#1f8a5b","--amb":"#b36b00","--bad":"#c0392b","--accink":"#fff"};
+ Object.keys(P).forEach(k=>r.setProperty(k,P[k]));
+ const a=ACC[TH.acc]||ACC[0];r.setProperty("--acc",dk?a[3]:a[2]);
+ const b=document.body;if(!b)return;
+ if(TH.bg==="photo"&&TH.photo){b.style.backgroundImage=`url(${TH.photo})`;b.style.backgroundSize="cover";b.style.backgroundPosition="center"}
+ else if(PAT[TH.bg]){b.style.backgroundImage=PAT[TH.bg];b.style.backgroundSize="";b.style.backgroundPosition=""}
+ else b.style.backgroundImage="none";
+ b.style.backgroundAttachment="fixed";
+}
+function setTh(k,v){TH[k]=v;saveTh();applyTheme();render()}
+function thPhoto(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=im.width*k;cv.height=im.height*k;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);TH.photo=cv.toDataURL("image/jpeg",.6);TH.bg="photo";saveTh();applyTheme();render()};im.src=r.result};r.readAsDataURL(f)}
+function pushCard(){return `<div class="card"><h3>🔔 ${L2("Notificări","Notifications")}</h3><div class="mut" style="margin-top:8px">${L2("Stare","Status")}: <b>${PS==="on"?L2("Active","On"):PS==="denied"?L2("Blocate în browser","Blocked in browser"):PS==="unsupported"?L2("Indisponibile aici","Not available here"):L2("Oprite","Off")}</b></div><div class="row" style="margin-top:10px"><button class="btn s" onclick="enablePush()">${L2("Activează","Turn on")}</button><button class="btn g s" onclick="disablePush()">${L2("Oprește","Turn off")}</button></div><div class="mut" style="margin-top:8px;font-size:13px">${L2("Primești alertă când service-ul îți răspunde sau îți actualizează mașina. Pe iPhone merge doar după ce aplicația e instalată pe ecranul principal.","You get an alert when the workshop replies or updates your car. On iPhone it only works once the app is installed on the home screen.")}</div></div>`}
+function themeCard(){
+ const seg=(k,o)=>`<div class="st" style="margin-top:8px">${o.map(x=>`<button class="${TH[k]===x[0]?"on":""}" onclick="setTh('${k}','${x[0]}')">${x[1]}</button>`).join("")}</div>`;
+ return `<div class="card"><h3>🎨 ${L2("Tema aplicației","App theme")}</h3><div class="mut" style="margin-top:8px">${L2("Mod","Mode")}</div>${seg("mode",[["auto","Auto"],["light",L2("Luminos","Light")],["dark",L2("Întunecat","Dark")]])}<div class="mut" style="margin-top:12px">${L2("Culoare","Colour")}</div><div class="row" style="margin-top:8px;flex-wrap:wrap;gap:10px">${ACC.map((a,i)=>`<button aria-label="${L2(a[0],a[1])}" onclick="setTh('acc',${i})" style="width:38px;height:38px;border-radius:50%;border:3px solid ${i===TH.acc?"var(--ink)":"transparent"};background:${a[2]};padding:0;cursor:pointer"></button>`).join("")}</div><div class="mut" style="margin-top:12px">${L2("Fundal","Background")}</div>${seg("bg",[["none",L2("Simplu","Plain")],["dots",L2("Puncte","Dots")],["tools",L2("Unelte","Tools")],["photo",L2("Poza mea","My photo")]])}<label class="btn g s" style="display:inline-block;margin-top:10px;cursor:pointer">📷 ${L2("Alege o poză de fundal","Choose a background photo")}<input type="file" accept="image/*" hidden onchange="thPhoto(this)"></label></div>`;
+}
+applyTheme();try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{if(TH.mode==="auto")applyTheme()})}catch(e){}
+function meView(){
+ const c=D.client||{};
+ const R=(ic,tt,k,sub)=>`<div class="card tap row sp" onclick="U.set='${k}';render()"><div class="row"><span style="font-size:24px">${ic}</span><div><b>${tt}</b>${sub?`<div class="mut">${sub}</div>`:""}</div></div><span>›</span></div>`;
+ const bk=`<button class="btn s g" onclick="U.set=null;render()">‹ ${t("back")}</button>`;
+ if(U.set==="acc")return bk+`<h2 style="margin-top:12px">${L2("Contul meu","My account")}</h2><div class="card"><div>${esc(c.name)}</div><div class="mut">${esc(c.phone)}${c.cui?" · "+esc(c.cui):""}</div></div>`;
+ if(U.set==="push")return bk+`<div style="height:8px"></div>${pushCard()}`;
+ if(U.set==="theme")return bk+`<div style="height:8px"></div>${themeCard()}`;
+ if(U.set==="lang")return bk+`<h2 style="margin-top:12px">${t("lang")}</h2><div class="card">${langBtns()}</div>`;
+ const inst=isStandalone?`<div class="card row sp" onclick="installNow()"><div class="row"><span style="font-size:24px">✅</span><div><b>${L2("Aplicația este instalată","App is installed")}</b><div class="mut">${L2("Gata, o ai pe ecranul telefonului","It is on your home screen")}</div></div></div></div>`:`<div class="card tap row sp" onclick="installNow()"><div class="row"><span style="font-size:24px">📲</span><div><b>${L2("Instalează pe telefon","Install on phone")}</b><div class="mut">${L2("Iconiță pe ecran, ca o aplicație","Icon on your screen, like an app")}</div></div></div><span>›</span></div>`;
+ return `<h2>${t("hi",{n:esc((c.name||"").split(" ")[0])})}</h2>${R("👤",L2("Contul meu","My account"),"acc",esc(c.name||""))}${inst}${R("🔔",L2("Notificări","Notifications"),"push",PS==="on"?L2("Active","On"):PS==="denied"?L2("Blocate în browser","Blocked"):L2("Oprite","Off"))}${R("🎨",L2("Tema aplicației","App theme"),"theme")}${R("🌐",t("lang"),"lang",LG==="ro"?"Română":"English")}<button class="btn g w" onclick="logout()">${t("logout")}</button>${credit("18px 0 8px")}`;
+}
+
+const MECH='<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="mc"><circle cx="32" cy="32" r="32"/></clipPath></defs><circle cx="32" cy="32" r="32" fill="#1c4fd8"/><g clip-path="url(#mc)"><path d="M12 66c0-18 9-24 20-24s20 6 20 24z" fill="#f08c00"/><g class="wv"><rect x="8" y="40" width="7" height="17" rx="3.5" fill="#f08c00" transform="rotate(-18 12 55)"/><circle cx="8.5" cy="38.5" r="4.3" fill="#f2c9a0"/></g><circle cx="32" cy="27" r="9.5" fill="#f2c9a0"/><path d="M21.5 25a10.5 10.5 0 0 1 21 0z" fill="#ffd43b"/><rect x="20" y="24" width="24" height="3.5" rx="1.7" fill="#ffd43b"/><ellipse class="ey" cx="28.3" cy="28.7" rx="1.2" ry="1.5" fill="#333"/><ellipse class="ey" cx="35.7" cy="28.7" rx="1.2" ry="1.5" fill="#333"/><circle cx="25.4" cy="31.4" r="1.8" fill="#f4a3a3" opacity=".75"/><circle cx="38.6" cy="31.4" r="1.8" fill="#f4a3a3" opacity=".75"/><path d="M27.5 31.6q4.5 5.5 9 0z" fill="#fff" stroke="#8a5a3c" stroke-width="1.1" stroke-linejoin="round"/><g class="wr"><g transform="rotate(30 49 36)"><rect x="46" y="22" width="6" height="26" rx="3" fill="#dee2e6"/><circle cx="49" cy="22" r="6.5" fill="#dee2e6"/><rect x="47" y="14" width="4" height="8" fill="#1c4fd8"/></g></g><circle cx="45" cy="47" r="4" fill="#f2c9a0"/></g></svg>';
+const L2=(a,b)=>LG==="ro"?a:b;
+const LIGHTS=[
+{k:"oil",n:["Presiune ulei","Oil pressure"],i:'<path d="M8 24h24v10a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2z"/><path d="M32 26l8-6v6M8 24l-4-3M20 24v-4h8"/><path d="M42 31c-2 3-2 5 0 5s2-2 0-5z"/>',o:[["red","Roșu","Red","🛑 Presiune de ulei prea mică. Oprește în siguranță cât mai repede și oprește motorul: fără ulei motorul se distruge în scurt timp. Nu mai conduce. După ce motorul s-a răcit puțin, poți verifica nivelul uleiului, apoi sună service-ul.","🛑 Oil pressure too low. Pull over safely and stop the engine: without oil it is destroyed quickly. Do not drive on. Once it has cooled a little you can check the oil level, then call the workshop."],["amber","Galben / portocaliu","Yellow / orange","⚠️ Nivelul sau starea uleiului trebuie verificate. Verifică nivelul cu joja, pe teren drept, cu motorul oprit de câteva minute, și programează o revizie.","⚠️ Oil level or condition needs checking. Check the dipstick on level ground with the engine off for a few minutes and book a service."]]},
+{k:"battery",n:["Baterie / încărcare","Battery / charging"],i:'<rect x="6" y="16" width="36" height="22" rx="2"/><path d="M12 13v3M36 13v3M13 27h8M29 27h8M33 23v8"/>',o:[["red","Roșu","Red","🛑 Sistemul de încărcare nu funcționează (alternator, curea sau baterie). Mașina merge doar pe baterie și poate rămâne fără curent în scurt timp. Oprește consumatorii (radio, aer condiționat, încălzire scaune) și mergi direct la service sau oprește într-un loc sigur.","🛑 The charging system is not working (alternator, belt or battery). The car runs on the battery only and may lose power soon. Switch off extras (radio, A/C, seat heating) and go straight to the workshop or stop somewhere safe."]]},
+{k:"engine",n:["Motor (check engine)","Engine (check engine)"],i:'<path d="M10 18h8l2-4h10l2 4h6v6h4v10h-4v4H14l-4-4z"/><path d="M4 24v8"/>',o:[["amber","Galben, fix","Yellow, steady","⚠️ Defecțiune în sistemul motorului sau al emisiilor. Poți continua cu grijă până la service, evitând accelerările puternice și remorcarea. Programează o diagnoză.","⚠️ A fault in the engine or emissions system. You can carry on carefully to the workshop, avoiding hard acceleration and towing. Book a diagnosis."],["blink","Clipește","Flashing","🛑 Clipește = posibile arderi neaprinse, care pot distruge catalizatorul. Redu viteza, evită accelerarea puternică, oprește cât mai curând și sună service-ul.","🛑 Flashing = possible misfires that can destroy the catalytic converter. Slow down, avoid hard acceleration, stop as soon as you can and call the workshop."],["red","Roșu","Red","🛑 Roșu = problemă gravă. Oprește în siguranță și sună service-ul.","🛑 Red = serious problem. Stop safely and call the workshop."]]},
+{k:"temp",n:["Temperatură motor","Engine temperature"],i:'<path d="M16 8a4 4 0 0 1 8 0v18a8 8 0 1 1-8 0z"/><path d="M30 18c2-2 4 2 6 0s4 2 6 0M30 27c2-2 4 2 6 0s4 2 6 0"/>',o:[["red","Roșu","Red","🛑 Motorul se supraîncălzește. Oprește în siguranță și oprește motorul. NU deschide buşonul vasului de expansiune cât e cald: lichidul e fierbinte și sub presiune. Sună service-ul.","🛑 The engine is overheating. Stop safely and switch it off. Do NOT open the coolant cap while hot: the liquid is scalding and under pressure. Call the workshop."],["blue","Albastru","Blue","ℹ️ Motorul e încă rece. E normal: condu lin până se stinge. Dacă rămâne aprins mult timp, spune-i service-ului.","ℹ️ The engine is still cold. That is normal: drive gently until it goes out. If it stays on for long, tell the workshop."]]},
+{k:"brake",n:["Frână","Brakes"],i:'<circle cx="24" cy="24" r="9"/><path d="M24 19v6M24 29v.5M10 14a16 16 0 0 0 0 20M38 14a16 16 0 0 1 0 20"/>',o:[["red","Roșu","Red","🛑 Poate fi frâna de mână trasă, nivel scăzut de lichid de frână sau o defecțiune la frâne. Dacă ai coborât frâna de mână și martorul rămâne aprins, NU conduce: frânele pot pierde din eficiență. Sună service-ul sau cere remorcare.","🛑 It may be the handbrake, low brake fluid or a brake fault. If the handbrake is released and the light stays on, do NOT drive: the brakes may lose effectiveness. Call the workshop or arrange towing."]]},
+{k:"abs",n:["ABS","ABS"],i:'<circle cx="24" cy="24" r="10"/><text x="24" y="28" text-anchor="middle" font-size="10" font-weight="700" fill="currentColor" stroke="none">ABS</text><path d="M10 14a16 16 0 0 0 0 20M38 14a16 16 0 0 1 0 20"/>',o:[["amber","Galben / portocaliu","Yellow / orange","⚠️ ABS-ul nu funcționează. Frânele obișnuite merg, dar roțile se pot bloca la frânare puternică, mai ales pe ud sau polei. Condu mai atent, păstrează distanța și vino la service.","⚠️ ABS is not working. Normal brakes still work, but wheels can lock under hard braking, especially on wet or icy roads. Drive more carefully, keep your distance and visit the workshop."]]},
+{k:"airbag",n:["Airbag","Airbag"],i:'<circle cx="18" cy="12" r="4"/><path d="M18 18v10l8 6M18 22l-6 6"/><circle cx="34" cy="26" r="8"/>',o:[["red","Roșu","Red","🛑 Sistemul airbag are o defecțiune: airbagurile pot să nu se declanșeze la accident. Mergi la service cât mai curând.","🛑 The airbag system has a fault: airbags may not deploy in a crash. Visit the workshop as soon as possible."]]},
+{k:"tpms",n:["Presiune cauciucuri","Tyre pressure"],i:'<path d="M12 36V22a12 12 0 0 1 24 0v14l-4-3H16z"/><path d="M24 15v8M24 27v.5"/>',o:[["amber","Galben / portocaliu","Yellow / orange","⚠️ Presiune scăzută la cel puțin un cauciuc. Oprește și verifică vizual cauciucurile, apoi măsoară presiunea cu cauciucurile reci. Dacă scade din nou, caută un cui. Dacă martorul clipește câteva secunde și apoi rămâne aprins, senzorul e defect.","⚠️ Low pressure in at least one tyre. Stop and check the tyres visually, then measure the pressure when cold. If it drops again, look for a nail. If the light flashes for a few seconds then stays on, a sensor is faulty."]]},
+{k:"glow",n:["Bujii incandescente","Glow plugs"],i:'<path d="M6 30c4-12 9 12 14 0s9 12 14 0 6 8 8 4"/><path d="M6 20h36"/>',o:[["start","Se stinge după pornire","Goes out after start","ℹ️ Preîncălzirea motorului diesel. Așteaptă să se stingă înainte să pornești. E normal.","ℹ️ Diesel pre-heating. Wait until it goes out before starting. This is normal."],["drive","Rămâne aprins sau clipește în mers","Stays on or flashes while driving","⚠️ Aprins sau clipește în mers = defecțiune la preîncălzire, injecție sau motor. Evită efortul mare al motorului și vino la service.","⚠️ On or flashing while driving = fault in pre-heating, injection or engine. Avoid heavy engine load and visit the workshop."]]},
+{k:"dpf",n:["Filtru particule (DPF)","Particulate filter (DPF)"],i:'<rect x="8" y="16" width="32" height="18" rx="3"/><path d="M15 22v6M21 22v6M27 22v6M33 22v6"/>',o:[["amber","Galben / portocaliu","Yellow / orange","⚠️ Filtrul de particule se înfundă. De obicei ajută un drum continuu, la turație medie, în afara orașului, dar respectă manualul mașinii. Dacă martorul rămâne aprins, vino la service înainte să apară alte martori.","⚠️ The particulate filter is clogging. A steady drive at medium revs outside town usually helps, but follow the car manual. If the light stays on, visit the workshop before other lights appear."]]},
+{k:"steer",n:["Direcție asistată","Power steering"],i:'<circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="3"/><path d="M10 24h11M27 24h11M24 27v11"/>',o:[["red","Roșu / portocaliu","Red / orange","🛑 Direcția asistată are o defecțiune: volanul poate deveni greu. Oprește în siguranță și sună service-ul.","🛑 The power steering has a fault: the wheel may become heavy. Stop safely and call the workshop."]]},
+{k:"belt",n:["Centură","Seat belt"],i:'<circle cx="22" cy="12" r="4"/><path d="M22 18v14l-6 8M22 22l10 10"/>',o:[["red","Roșu","Red","ℹ️ O centură nu este prinsă. Prinde-o înainte să pornești.","ℹ️ A seat belt is not fastened. Fasten it before you drive."]]}
+];
+const B={hist:[],open:false,carId:null,msgs:[],chips:[],picker:false,mode:null,text:"",photo:null,busy:false,ctx:""};
+const bcar=()=>D.cars.find(c=>c.id===B.carId);
+const cname=c=>c?esc(((c.make||"")+" "+(c.model||"")+" "+(c.year||"")).trim())+" ("+esc(c.plate)+")":L2("mașina ta","your car");
+const topicChips=()=>[["tyre","🛞 "+L2("Presiune cauciucuri","Tyre pressure")],["oil","🛢️ "+L2("Ce ulei","Which oil")],["cool","💧 "+L2("Antigel","Coolant")],["light","⚠️ "+L2("Martor aprins","Warning light")],["cap","🔒 "+L2("Buşon apă – pericol","Coolant cap – danger")],["free","❓ "+L2("Altă întrebare","Other question")]];
+const botSay=h=>B.msgs.push({b:1,h});
+const botMe=h=>B.msgs.push({b:0,h});
+const askChip=()=>["askq","📨 "+L2("Întreabă service-ul","Ask the workshop")];
+
+const MI={on:false,done:false};
+const CARSVG='<svg viewBox="0 0 120 52" xmlns="http://www.w3.org/2000/svg"><path d="M6 36Q8 24 24 22L40 10Q44 7 52 7H78Q86 7 92 14L100 22Q114 24 116 36V40H6Z" fill="#f08c00"/><path d="M44 12L52 10H62V22H34Z" fill="#dff1ff"/><path d="M66 10H78Q82 10 86 15L92 22H66Z" fill="#dff1ff"/><rect x="110" y="28" width="6" height="5" rx="2" fill="#ffe066"/><g class="wh"><circle cx="30" cy="42" r="9" fill="#222"/><circle cx="30" cy="42" r="4" fill="#aaa"/><path d="M30 34v16M22 42h16" stroke="#777" stroke-width="2"/></g><g class="wh"><circle cx="92" cy="42" r="9" fill="#222"/><circle cx="92" cy="42" r="4" fill="#aaa"/><path d="M92 34v16M84 42h16" stroke="#777" stroke-width="2"/></g></svg>';
+function playIntro(){
+ try{if(sessionStorage.getItem("ac_intro")||(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)){MI.done=true;return}sessionStorage.setItem("ac_intro","1")}catch(e){MI.done=true;return}
+ MI.on=true;
+ const d=document.createElement("div");d.id="mintro";
+ d.innerHTML=`<div class="mi"><div class="road"></div><div class="car"><i class="puff"></i><i class="puff"></i><i class="puff"></i>${CARSVG}</div></div><div class="mib" onclick="introOpen()"><b>${L2("Cu ce te ajut?","How can I help?")} 🔧</b></div><i class="spk a">✦</i><i class="spk b">✦</i><i class="spk c">✦</i><button class="mim" aria-label="Mecanicul meu" onclick="introOpen()">${MECH}</button>`;
+ document.body.appendChild(d);
+ setTimeout(introEnd,11000);
+}
+function introEnd(){const d=document.getElementById("mintro");if(d)d.remove();MI.done=true;if(!U.form&&!B.open)render()}
+function introOpen(){introEnd();openBot()}
+function fab(){const hv=MI.on&&!MI.done?' style="visibility:hidden"':"";return `<button class="mfab noprint"${hv} aria-label="Mecanicul meu" onclick="openBot()">${MECH}</button><span class="mlab noprint"${hv}>${L2("Mecanicul meu","My mechanic")}</span>`}
+function openBot(){
+ B.open=true;
+ if(!B.msgs.length){if(D.cars.length===1)B.carId=D.cars[0].id;botSay(L2("Salut! Sunt <b>Mecanicul tău</b> 🔧. Alege mașina de sus și spune-mi ce te interesează. Dacă nu sunt sigur de ceva, te întreb înainte să răspund, ca să nu greșim.","Hi! I'm <b>your Mechanic</b> 🔧. Pick your car above and tell me what you need. If I'm not sure about something, I'll ask before answering so we don't get it wrong."));B.chips=topicChips()}
+ render();
+}
+function closeBot(){B.open=false;B.picker=false;B.mode=null;render()}
+function botDo(k,a){
+ const c=bcar(),nm=cname(c);B.picker=false;B.mode=null;
+ if(k==="askq"){botAsk();return}
+ if(["tyre","oil","cool"].includes(k)&&!c&&D.cars.length>1){botSay(L2("Pentru care mașină? Alege-o din lista de sus și apasă din nou.","Which car? Pick it from the list above and tap again."));B.chips=[[k,L2("Gata, alesă","Done, chosen")],...topicChips()];render();return}
+ if(k==="tyre"){
+  botMe("🛞 "+L2("Presiune cauciucuri","Tyre pressure"));
+  if(c&&(c.tyre_front||c.tyre_rear)){botSay(L2(`Service-ul a notat pentru <b>${nm}</b>: față <b>${esc(c.tyre_front||"—")}</b>, spate <b>${esc(c.tyre_rear||"—")}</b>. Măsoară cu cauciucurile reci. Cu mașina încărcată poate fi altă valoare: verifică și autocolantul din cadrul ușii șoferului.`,`The workshop noted for <b>${nm}</b>: front <b>${esc(c.tyre_front||"—")}</b>, rear <b>${esc(c.tyre_rear||"—")}</b>. Measure with cold tyres. A loaded car may need a different value: also check the sticker in the driver's door frame.`));B.chips=topicChips()}
+  else{botSay(L2(`Nu am o valoare verificată pentru <b>${nm}</b>. Valoarea corectă e pe autocolantul din cadrul ușii șoferului, pe capacul rezervorului sau în manual (depinde de dimensiunea cauciucurilor și de încărcare). Nu te baza pe o valoare găsită pe internet. Vrei să întreb service-ul?`,`I don't have a verified value for <b>${nm}</b>. The correct one is on the sticker in the driver's door frame, inside the fuel flap or in the manual (it depends on tyre size and load). Don't rely on a number from the internet. Shall I ask the workshop?`));B.ctx=L2("Ce presiune trebuie la cauciucuri?","What tyre pressure should I use?");B.chips=[askChip(),...topicChips()]}
+ }else if(k==="oil"){
+  botMe("🛢️ "+L2("Ce ulei","Which oil"));
+  if(c&&c.oil_spec){botSay(L2(`Fișa service-ului pentru <b>${nm}</b>: ulei <b>${esc(c.oil_spec)}</b>${c.oil_qty?`, cantitate <b>${esc(c.oil_qty)}</b>`:""}. Respectă specificația completă, nu doar vâscozitatea.`,`Workshop sheet for <b>${nm}</b>: oil <b>${esc(c.oil_spec)}</b>${c.oil_qty?`, quantity <b>${esc(c.oil_qty)}</b>`:""}. Follow the full specification, not just the viscosity.`));B.chips=topicChips()}
+  else{botSay(L2(`Uleiul corect depinde de motor (normă a producătorului, litri, anul mașinii). Pentru <b>${nm}</b> service-ul nu a completat încă fișa, deci nu vreau să ghicesc: o valoare greșită poate strica motorul. Întreb service-ul? Dacă ai seria șasiului (VIN) la îndemână, scrie-o la „Altă întrebare”.`,`The right oil depends on the engine (manufacturer spec, litres, model year). The workshop hasn't filled in the sheet for <b>${nm}</b> yet, so I won't guess: the wrong oil can damage the engine. Shall I ask the workshop? If you have the VIN at hand, write it under “Other question”.`));B.ctx=L2("Ce ulei și ce cantitate trebuie?","Which oil and how much does it need?");B.chips=[askChip(),...topicChips()]}
+ }else if(k==="cool"){
+  botMe("💧 "+L2("Antigel","Coolant"));
+  const w=L2("<br><br>⚠️ Nu amesteca tipuri diferite de antigel și nu deschide buşonul cu motorul cald.","<br><br>⚠️ Don't mix different coolant types and never open the cap while the engine is hot.");
+  if(c&&c.coolant_spec){botSay(L2(`Fișa service-ului pentru <b>${nm}</b>: <b>${esc(c.coolant_spec)}</b>.`,`Workshop sheet for <b>${nm}</b>: <b>${esc(c.coolant_spec)}</b>.`)+w);B.chips=topicChips()}
+  else{botSay(L2(`Tipul de antigel depinde de mașină (culoarea nu e un criteriu sigur). Pentru <b>${nm}</b> nu am o valoare verificată, deci întreb service-ul.`,`The coolant type depends on the car (colour is not a reliable guide). I have no verified value for <b>${nm}</b>, so let me ask the workshop.`)+w);B.ctx=L2("Ce antigel trebuie la mașina mea?","Which coolant does my car need?");B.chips=[askChip(),...topicChips()]}
+ }else if(k==="cap"){
+  botMe("🔒 "+L2("Buşon apă – pericol","Coolant cap – danger"));
+  botSay(`<div class="warn">${L2("<b>🛑 Nu deschide niciodată buşonul vasului de expansiune cu motorul cald.</b><br>Lichidul de răcire e fierbinte și sub presiune: poate țâșni și provoca arsuri grave.<br><br>• Oprește motorul și lasă-l să se răcească complet (rece la atingere).<br>• Pune o cârpă groasă peste buşon și deschide-l încet, doar puțin, ca să iasă presiunea.<br>• Antigelul e toxic: nu-l lăsa la îndemâna copiilor sau animalelor.<br>• Dacă motorul s-a supraîncălzit, sună service-ul în loc să adaugi lichid pe cald.","<b>🛑 Never open the coolant expansion cap while the engine is hot.</b><br>The coolant is scalding and under pressure: it can spray out and cause severe burns.<br><br>• Switch the engine off and let it cool completely (cold to the touch).<br>• Put a thick cloth over the cap and open it slowly, just a little, to release the pressure.<br>• Coolant is toxic: keep it away from children and pets.<br>• If the engine overheated, call the workshop instead of adding liquid while hot.")}</div>`);
+  B.chips=topicChips();
+ }else if(k==="light"){
+  botMe("⚠️ "+L2("Martor aprins","Warning light"));
+  botSay(L2("Alege simbolul care seamănă cel mai mult cu cel din bord. Dacă nu ești sigur, mergi la „Altă întrebare” și trimite o poză.","Pick the symbol that looks most like the one on your dashboard. If you're not sure, go to “Other question” and send a photo."));
+  B.picker=true;
+ }else if(k==="pick"){
+  const l=LIGHTS.find(x=>x.k===a);botMe("⚠️ "+L2(l.n[0],l.n[1]));
+  if(l.o.length===1)botShow(l,l.o[0]);
+  else{botSay(L2("Ce culoare are sau cum se comportă?","What colour is it or how does it behave?"));B.chips=l.o.map(o=>["col",L2(o[1],o[2]),l.k+"|"+o[0]])}
+ }else if(k==="col"){
+  const [lk,ck]=a.split("|"),l=LIGHTS.find(x=>x.k===lk),o=l.o.find(x=>x[0]===ck);botMe(L2(o[1],o[2]));botShow(l,o);
+ }else if(k==="book"){B.open=false;U.form={k:"appt",id:B.carId};render();return}
+ else if(k==="free"){
+  botMe("❓ "+L2("Altă întrebare","Other question"));
+  botSay(L2("Scrie întrebarea. Poți adăuga și o poză (de exemplu cu bordul). Spune ce mașină e și ce s-a întâmplat. Dacă îmi lipsește ceva, te întreb.","Write your question. You can add a photo (for example of the dashboard). Say which car it is and what happened. If something is missing, I'll ask."));
+  B.mode="free";
+ }
+ render();
+}
+function botShow(l,o){
+ botSay(`<b>${L2(l.n[0],l.n[1])}</b><br>${L2(o[3],o[4])}`);
+ B.ctx=L2("Martor aprins: ","Warning light: ")+L2(l.n[0],l.n[1])+" ("+L2(o[1],o[2])+")";
+ B.chips=[askChip(),["book","📅 "+L2("Programează","Book a visit")],...topicChips().slice(0,4)];
+}
+async function botAsk(){
+ const q=(B.ctx||"").trim();if(!q)return;const c=bcar();
+ const {error}=await sb.from("chat_messages").insert({workshop_id:ME.workshop_id,client_id:ME.client_id,sender:"client",body:"❓ "+q+(c?" ["+c.plate+"]":""),photo:B.photo||null});
+ botMe("📨 "+L2("Întreabă service-ul","Ask the workshop"));
+ if(error)botSay(esc(errMsg(error.message)));
+ else{sendPush(ME.client_id,"❓ "+((D.client&&D.client.name)||"Client"),q);botSay(L2("✅ Am trimis întrebarea la service. Răspunsul îl vezi în tabul Chat.","✅ Sent to the workshop. You'll see the reply in the Chat tab."));B.photo=null;B.text=""}
+ B.mode=null;B.chips=topicChips();render();
+}
+async function botSendAI(){
+ const q=(B.text||"").trim();if(!q)return;const c=bcar();
+ const img=B.photo||null;
+ const tr=B.hist.slice(-6).map(h=>(h.r==="u"?"Client: ":"Mecanic: ")+h.t).join("\n");
+ let full=(tr?"Conversația de până acum:\n"+tr+"\n---\nClientul scrie acum: ":"")+q;if(full.length>1450)full=full.slice(-1450);
+ B.ctx=q;botMe(esc(q).replace(/\n/g,"<br>")+(img?" 📷":""));B.text="";B.photo=null;B.mode=null;B.busy=true;render();
+ try{
+  const {data:{session}}=await sb.auth.getSession();
+  const res=await fetch(SB_URL+"/functions/v1/mecanic",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token,"apikey":SB_KEY},body:JSON.stringify({question:full,lang:LG,image:img,car:c?{make:c.make,model:c.model,year:c.year,vin:c.vin,oil_spec:c.oil_spec,oil_qty:c.oil_qty,coolant_spec:c.coolant_spec,tyre_front:c.tyre_front,tyre_rear:c.tyre_rear,note:c.tech_note}:null})});
+  if(!res.ok){const tx=await res.text();throw new Error(res.status+" "+tx.slice(0,160))}
+  const j=await res.json();if(!j.answer)throw new Error("empty");B.hist.push({r:"u",t:q.slice(0,400)},{r:"a",t:j.answer.slice(0,500)});
+  B.busy=false;botSay(esc(j.answer).replace(/\n/g,"<br>")+`<div class="mut" style="margin-top:6px">${L2("Răspuns generat de AI. Pentru decizii importante (frâne, ulei, cantități) confirmă cu service-ul.","AI-generated answer. For important decisions (brakes, oil, quantities) confirm with the workshop.")}</div>`);
+ }catch(x){B.busy=false;botSay(L2("Asistentul AI nu este disponibil acum. Pot trimite întrebarea ta service-ului, care îți răspunde în tabul Chat.","The AI assistant isn't available right now. I can send your question to the workshop; they'll reply in the Chat tab.")+`<div class="mut" style="font-size:12px;margin-top:6px">${esc(String(x.message||x)).slice(0,200)}</div>`)}
+ B.chips=[askChip(),["free","❓ "+L2("Altă întrebare","Another question")],...topicChips().slice(0,4)];B.mode="free";render();
+}
+function botPhoto(inp){
+ const f=inp.files[0];if(!f)return;const r=new FileReader();
+ r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,800/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=im.width*k;cv.height=im.height*k;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);B.photo=cv.toDataURL("image/jpeg",.6);render()};im.src=r.result};
+ r.readAsDataURL(f);
+}
+function botH(){
+ const sel=`<select onchange="B.carId=this.value||null;render()" style="margin:8px 0"><option value="">${L2("— alege mașina —","— choose car —")}</option>${D.cars.map(c=>`<option value="${c.id}" ${c.id===B.carId?"selected":""}>${esc(c.plate)} · ${esc(c.make)} ${esc(c.model)}</option>`).join("")}</select>`;
+ const msgs=B.msgs.map(m=>`<div class="bub ${m.b?"":"me"}">${m.h}</div>`).join("")+(B.busy?`<div class="bub mut">${L2("Mecanicul se gândește...","Thinking...")}</div>`:"");
+ let foot;
+ if(B.picker)foot=`<div class="lights">${LIGHTS.map(l=>`<button class="lt" onclick="botDo('pick','${l.k}')"><svg viewBox="0 0 48 48">${l.i}</svg>${L2(l.n[0],l.n[1])}</button>`).join("")}</div>`;
+ else if(B.mode==="free")foot=`<textarea rows="3" placeholder="${L2("Scrie întrebarea ta...","Write your question...")}" oninput="B.text=this.value">${esc(B.text)}</textarea>${B.photo?`<img src="${B.photo}" alt="" style="height:70px;border-radius:8px;margin-top:6px">`:""}<div class="row" style="margin-top:8px"><button class="btn g s" onclick="$('bp').click()">📷 ${L2("Poză","Photo")}</button><button class="btn s" style="flex:1" onclick="botSendAI()">${L2("Întreabă Mecanicul","Ask the Mechanic")}</button><button class="btn g s" onclick="B.ctx=(B.text||'').trim()||B.ctx;botAsk()">📨 ${L2("Service","Workshop")}</button><button class="btn g s" onclick="B.mode=null;render()">☰</button></div>`;
+ else foot=`<div class="chips2">${B.chips.map(x=>`<button class="chipb" onclick="botDo('${x[0]}'${x[2]?`,'${x[2]}'`:""})">${x[1]}</button>`).join("")}</div>`;
+ return `<div class="ov" onclick="if(event.target===this)closeBot()"><div class="sheet" style="height:88vh;display:flex;flex-direction:column"><div class="row sp"><div class="row"><span style="width:40px;height:40px;display:inline-block">${MECH}</span><h3>${L2("Mecanicul meu","My mechanic")}</h3></div><button class="btn g s" onclick="closeBot()">✕</button></div>${sel}<div id="bm" style="flex:1;overflow:auto">${msgs}</div><div style="padding-top:8px">${foot}</div><input type="file" accept="image/*" id="bp" hidden onchange="botPhoto(this)"></div></div>`;
+}
+function formH(){
+ const f=U.form,today=new Date().toISOString().slice(0,10),I=(n,l,x="")=>`<label class="lab">${l}</label><input name="${n}" ${x}>`;
+ const R=(n,o)=>`<div class="chips">${o.map((x,i)=>`<input type="radio" name="${n}" id="${n}${i}" value="${x[0]}" ${i==0?"checked":""}><label for="${n}${i}">${x[1]}</label>`).join("")}</div>`;
+ let b="",ttl;
+ if(f.k==="caredit"){const c=car(f.id),V=(n,l,val,x="")=>`<label class="lab">${l}</label><input name="${n}" value="${esc(val)}" ${x}>`;
+  ttl=L2("Datele mașinii","Car details");
+  b=(c.confirmed?`<div class="mut">${L2("Numărul de înmatriculare îl poate schimba doar service-ul.","Only the workshop can change the plate number.")}</div>`:V("plate",t("plate"),c.plate,"required"))+V("make",t("make"),c.make,"required")+V("model",t("model"),c.model,"required")+V("year",t("year"),c.year,'inputmode="numeric"')+V("vin",L2("Serie șasiu (VIN)","VIN"),c.vin)+`<label class="lab">📷 ${L2("Poza talonului","Registration photo")}</label><input type="file" accept="image/*" onchange="pickPhoto(this)"><img id="phv" alt="" style="max-width:100%;max-height:180px;margin-top:8px;border-radius:10px;${c.talon?"":"display:none"}" ${c.talon?`src="${c.talon}"`:""}>`}
+ if(f.k==="req"){ttl=L2("Cere o piesă / altă cerere","Request a part / other");
+  b=`<label class="lab">${t("car")}</label><select name="car_id"><option value="">—</option>${D.cars.map(c=>`<option value="${c.id}" ${c.id===f.id?"selected":""}>${esc(c.plate)} · ${esc(c.make)} ${esc(c.model)}</option>`).join("")}</select><label class="lab">${L2("Ce ai nevoie? (ex. comandă plăcuțe de frână față)","What do you need? (e.g. order front brake pads)")}</label><textarea name="text" rows="3" required></textarea>`}
+ if(f.k==="car"){ttl=t("addCar");b=`<label class="lab">📷 ${L2("Scanează talonul sau seria de șasiu","Scan the registration or VIN")}</label><input type="file" accept="image/*" onchange="scanCarC(this)"><div id="scst" class="mut" style="margin-top:6px"></div>`+I("plate",t("plate"),"required")+`<label class="lab">${t("country")}</label><select name="country">${COUNTRIES.map(c=>`<option value="${c[0]}" ${c[0]===homeCountry()?"selected":""}>${c[0]} · ${c[1]}</option>`).join("")}</select>`+I("make",t("make"),"required")+I("model",t("model"),"required")+I("year",t("year"),'inputmode="numeric"')+I("vin",t("vin"))}
+ if(f.k==="appt"){
+  ttl=t("newAppt");const cs=D.cars.filter(c=>c.confirmed);
+  if(!cs.length)b=`<p class="mut">${t("noCar")}</p>`;
+  else b=`<label class="lab">${t("car")}</label><select name="car_id">${cs.map(c=>`<option value="${c.id}" ${c.id===f.id?"selected":""}>${esc(c.plate)} · ${esc(c.make)} ${esc(c.model)}</option>`).join("")}</select><label class="lab">${t("reason")}</label>`+R("note",[[t("oilJob"),t("oilJob")],[t("beltJob"),t("beltJob")],[t("rev"),t("rev")],[t("other"),t("other")]])+I("wanted_on",t("date"),`type="date" min="${today}" required`)+I("wanted_time",t("time"),'type="time"')+I("more",t("more"));
+ }
+ return `<div class="ov" onclick="if(event.target===this){U.form=null;render()}"><form class="sheet" onsubmit="return sub(event)"><h2>${ttl}</h2>${b}<div class="row" style="margin-top:16px"><button class="btn" style="flex:1">${f.k==="appt"?t("send"):t("save")}</button><button type="button" class="btn g" onclick="U.form=null;render()">${t("cancel")}</button></div></form></div>`;
+}
+
+let PH=null;
+function pickPhoto(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1100/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=im.width*k;cv.height=im.height*k;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);PH=cv.toDataURL("image/jpeg",.7);const pv=document.getElementById("phv");if(pv){pv.src=PH;pv.style.display="block"}};im.src=r.result};r.readAsDataURL(f)}
+function showImg(s){const d=document.createElement("div");d.className="ov";d.style.alignItems="center";d.onclick=()=>d.remove();d.innerHTML='<img src="'+s+'" style="max-width:96%;max-height:92vh;border-radius:10px;background:#fff">';document.body.appendChild(d)}
+function editCar(id){PH=null;U.form={k:"caredit",id};render()}
+
+const tmC=d=>{const x=new Date(d),l=LG==="ro"?"ro-RO":"en-GB";return x.toLocaleDateString(l)+" "+x.toLocaleTimeString(l,{hour:"2-digit",minute:"2-digit"})};
+const bubC=(m,mine)=>`<div class="bub ${mine?"me":""}">${m.photo?`<img src="${m.photo}" alt="" onclick="showImg(this.src)" style="max-width:100%;max-height:220px;border-radius:8px;display:block;margin-bottom:6px">`:""}${esc(m.body||"").replace(/\n/g,"<br>")}<div style="font-size:11px;opacity:.7;margin-top:4px">${tmC(m.created_at)}</div></div>`;
+let CD={text:"",photo:null};
+const chatSeen=()=>{try{return localStorage.getItem("ac_chat_seen")||"1970"}catch(e){return"1970"}};
+const chatUnread=()=>D.chat_messages.filter(m=>m.sender==="service"&&m.created_at>chatSeen()).length;
+const markChat=()=>{try{localStorage.setItem("ac_chat_seen",new Date().toISOString())}catch(e){}};
+function chatHtml(){const L=D.chat_messages.slice().sort((a,b)=>a.created_at.localeCompare(b.created_at));return L.length?L.map(m=>bubC(m,m.sender==="client")).join(""):`<p class="mut">${L2("Scrie service-ului. Răspunsul apare aici.","Write to the workshop. Replies appear here.")}</p>`}
+function chatView(){
+ markChat();
+ return `<h2>💬 Chat</h2><div id="cm" style="padding-bottom:90px">${chatHtml()}</div><div class="cbar"><button class="btn g s" onclick="$('cp').click()">📷</button><input type="file" accept="image/*" id="cp" hidden onchange="chatPhoto(this)"><input id="ci" type="text" placeholder="${L2("Scrie un mesaj...","Write a message...")}" value="${esc(CD.text)}" oninput="CD.text=this.value" onkeydown="if(event.key==='Enter')chatSend()" style="flex:1"><span id="cpi" style="${CD.photo?"":"display:none"}">🖼️</span><button class="btn s" onclick="chatSend()">➤</button></div>`;
+}
+function chatRefresh(){const el=$("cm");if(el){el.innerHTML=chatHtml();markChat();window.scrollTo(0,document.body.scrollHeight)}}
+function chatPhoto(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=im.width*k;cv.height=im.height*k;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);CD.photo=cv.toDataURL("image/jpeg",.65);const i=$("cpi");if(i)i.style.display=""};im.src=r.result};r.readAsDataURL(f)}
+async function chatSend(){
+ const body=(CD.text||"").trim();if(!body&&!CD.photo)return;
+ const {error}=await sb.from("chat_messages").insert({workshop_id:ME.workshop_id,client_id:ME.client_id,sender:"client",body:body||null,photo:CD.photo});
+ if(error){alert(error.message);return}
+ sendPush(ME.client_id,"💬 "+((D.client&&D.client.name)||"Client"),body||"📷 Poză");
+ CD={text:"",photo:null};const i=$("ci");if(i)i.value="";const pi=$("cpi");if(pi)pi.style.display="none";
+ const r=await sb.from("chat_messages").select("*");if(!r.error)D.chat_messages=r.data;chatRefresh();
+}
+setInterval(async()=>{
+ if(!ME||document.hidden)return;
+ const {data,error}=await sb.from("chat_messages").select("*");if(error)return;
+ const before=D.chat_messages.length;D.chat_messages=data;if(data.length===before)return;
+ if(U.tab==="chat"&&!U.carId)chatRefresh();
+ else if(!U.form&&!B.open&&!(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)))render();
+},8000);
+async function scanCarC(inp){
+ const f=inp.files[0],st=document.getElementById("scst");if(!f)return;
+ const say=(t,c)=>{if(st){st.textContent=t;st.style.color=c||""}};
+ say("⏳ ...");
+ try{
+  const url=await new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1600/Math.max(im.width,im.height)),cv=document.createElement("canvas");cv.width=im.width*k;cv.height=im.height*k;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);ok(cv.toDataURL("image/jpeg",.85))};im.onerror=no;im.src=r.result};r.onerror=no;r.readAsDataURL(f)});
+  const {data:{session}}=await sb.auth.getSession();
+  const res=await fetch(SB_URL+"/functions/v1/scan",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token,"apikey":SB_KEY},body:JSON.stringify({image:url})});
+  const d=await res.json();
+  if(!res.ok||d.error){say(L2("Nu am reușit să citesc poza. Încearcă o poză mai clară, de aproape.","Could not read the photo. Try a closer, clearer one."),"#e5484d");return}
+  const fm=inp.closest("form"),put=(n,v)=>{const e=fm.elements[n];if(e&&v&&!e.value)e.value=v};
+  put("plate",d.plate);put("make",d.make);put("model",d.model);put("year",d.year);put("vin",d.vin);
+  const n=["plate","vin","make","model","year"].filter(k=>d[k]).length;
+  if(!n)say(L2("Nu am găsit date. Fă o poză clară talonului sau plăcuței cu seria.","No data found. Take a clear photo of the registration or VIN plate."),"#e5484d");
+  else say(L2("✅ Am completat "+n+" câmpuri. Verifică-le și apasă Salvează.","✅ Filled "+n+" fields. Check them and tap Save."),"#1a9e57");
+ }catch(e){say(L2("Nu am reușit. Verifică internetul și încearcă din nou.","Failed. Check the connection and try again."),"#e5484d")}
+}
+async function sub(e){
+ e.preventDefault();const v=Object.fromEntries(new FormData(e.target)),f=U.form;let p;
+ if(f.k==="car")p=sb.rpc("add_my_car",{p_plate:v.plate,p_country:v.country,p_make:v.make,p_model:v.model,p_year:v.year||"",p_vin:v.vin||""});
+ if(f.k==="appt"){if(!v.car_id){U.form=null;render();return false}p=sb.from("appointments").insert({workshop_id:ME.workshop_id,car_id:v.car_id,wanted_on:v.wanted_on,wanted_time:v.wanted_time||null,note:v.note+(v.more?" – "+v.more:""),status:"wait"})}
+ if(f.k==="caredit"){const c=car(f.id);p=sb.rpc("client_update_car",{p_id:f.id,p_make:v.make,p_model:v.model,p_year:v.year||null,p_vin:v.vin||null,p_plate:c.confirmed?null:(v.plate||null),p_talon:PH})}
+ if(f.k==="req"){if(!(v.text||"").trim())return false;p=sb.from("requests").insert({workshop_id:ME.workshop_id,client_id:ME.client_id,car_id:v.car_id||null,kind:"part",text:v.text.trim(),status:"new",source:"client"})}
+ U.form=null;
+ const okk=await run(p),cn=(D.client&&D.client.name)||"Client";
+ if(okk){if(f.k==="appt")sendPush(ME.client_id,"📅 "+cn,"Cerere de programare");if(f.k==="req")sendPush(ME.client_id,"🔧 "+cn,v.text.trim());if(f.k==="car")sendPush(ME.client_id,"🚗 "+cn,"Mașină nouă de confirmat")}
+ if(okk&&f.k==="appt"){U.tab="appts";U.carId=null;render();alert(t("sent"))}
+ return false;
+}
+function op(k,id){U.form={k,id};render()}
+function render(){
+ if(U.tab!=="me")U.set=null;
+ const v=U.carId?carDetail():U.tab==="home"?homeView():U.tab==="cars"?carsView():U.tab==="appts"?apptsView():U.tab==="chat"?chatView():U.tab==="msgs"?msgsView():meView();
+ const bd=U.tab==="msgs"?0:D.notifications.filter(n=>n.created_at>seen()).length;
+ const cu=U.tab==="chat"?0:chatUnread();const tabs=[["home","🏠",L2("Acasă","Home")],["cars","🚗",t("cars")],["chat","💬","Chat"],["me","👤",t("me")]];const hl=(U.tab==="appts"||U.tab==="msgs")?"home":U.tab;
+ $("app").innerHTML=`${U.tab==="home"&&!U.carId?"":`<div class="bar"><div class="brand">${brandH()}</div></div>`}<main>${v}</main><nav>${tabs.map(x=>`<button class="${hl===x[0]&&!U.carId?"on":""}" onclick="U.tab='${x[0]}';U.carId=null;U.set=null;render()"><span>${x[1]}</span>${x[2]}${x[0]==="msgs"&&bd?`<b class="bdg">${bd}</b>`:""}${x[0]==="chat"&&cu?`<b class="bdg">${cu}</b>`:""}</button>`).join("")}</nav>${B.open||U.tab==="chat"?"":fab()}${U.form?formH():""}${B.open?botH():""}`;
+ if(B.open){const m=$("bm");if(m)m.scrollTop=m.scrollHeight}
+ if(U.tab==="chat"&&!U.carId)window.scrollTo(0,document.body.scrollHeight);
+}
+(async()=>{if(!sb){authView("Connection library not loaded.");return}try{const {data:{session}}=await sb.auth.getSession();session?boot():authView()}catch(x){authView(x.message)}})();
+if("serviceWorker" in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
