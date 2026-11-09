@@ -1,0 +1,45 @@
+name: Construieste Director360
+on:
+  push:
+    paths:
+      - 'Director360-proiect.zip'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dezarhiveaza
+        run: mkdir d360 && unzip -o Director360-proiect.zip -d d360
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Compileaza
+        working-directory: d360
+        run: |
+          set -o pipefail
+          gradle :app:assembleRelease --no-daemon --stacktrace 2>&1 | tee ../director-build-log.txt
+      - name: Jurnal pentru Claude daca nu merge
+        if: failure()
+        run: |
+          git config user.name "build-bot"
+          git config user.email "build-bot@users.noreply.github.com"
+          tail -n 400 director-build-log.txt > director-eroare.txt
+          git add -f director-eroare.txt
+          git commit -m "Jurnal eroare Director360 [skip ci]"
+          git push
+      - name: Pregateste
+        run: cp d360/app/build/outputs/apk/release/app-release.apk Director360.apk
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: director-v${{ github.run_number }}
+          name: Director360 - versiunea ${{ github.run_number }}
+          body: Director360.apk - instaleaza-l pe telefon.
+          files: Director360.apk
+          make_latest: false
