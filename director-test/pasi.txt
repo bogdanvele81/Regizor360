@@ -1,6 +1,9 @@
 telefon virtual pornit (Android 14)
 instalat
 poză: 01-pornire
+poză: 01-pornire-b
+poză: 01-pornire-c
+poză: 01-pornire-d
 poză: 02-acasa
 atins: Filmări
 poză: 03-filmari
@@ -10,16 +13,38 @@ atins: Ajutor
 poză: 05-ajutor
 atins: Cameră
 poză: 06-camera
-fără ffmpeg: fără fișiere de probă
-nu pot pune /tmp/media/*
+total 16404
+drwxr-xr-x  2 runner runner    4096 Nov  9 16:23 .
+drwxrwxrwt 16 root   root      4096 Nov  9 16:23 ..
+-rw-r--r--  1 runner runner  268658 Nov  9 16:23 IMG_20260905_130500_00_003.insp
+-rw-r--r--  1 runner runner   23021 Nov  9 16:23 IMG_20260905_130600.jpg
+-rw-r--r--  1 runner runner 7177986 Nov  9 16:23 VID_20260904_120000_00_002.mp4
+-rw-r--r--  1 runner runner 9312103 Nov  9 16:23 VID_20260905_130400_00_001.mp4
 poză: 07-lista
 atins: Poze
 poză: 08-lista-poze
 atins: Filmări
 poză: 09-lista-filmari
-poză: 10-editor
-nu găsesc pe ecran: Pornește
-poză: 11-editor-play
-poză: 12-poza360
-poză: 13-poza
+poză: 10-alese
+poză: 11-editor
+atins: Pornește
+poză: 12-editor-play
+poză: 13-montaj
+atins: Filtru
+poză: 14-filtru
+nu găsesc pe ecran: Viu
+poză: 15-filtru-viu
+atins: Durată
+poză: 16-durata
+atins: Salvează
+atins: Salvează
+poză: 17-salvez
+poză: 18-salvat
+fișiere salvate: total 9620
+-rwxrwx--- 1 u0_a170 media_rw 9843456 2026-11-09 16:25 Director360_20261109_162540.mp4
+stream|codec_type=audio
+stream|codec_type=video|width=1920|height=1080
+format|duration=9.032562
+poză: 19-poza360
+poză: 20-poza
 fără erori

@@ -12,7 +12,7 @@ INFO         |      Ok: Hardware GPU compatibility checks are not required
 INFO         |   Checking: hasSufficientSystem
 INFO         |      Ok: System requirements to run avd: `proba` are met
 WARNING      | Feature QuickbootFileBacked is disabled due to stability issues, if you really want that, the environment variable ANDROID_EMU_FORCE_QUICKBOOT_FILE_BACKED need to set to 1
-INFO         | Storing crashdata in: /tmp/android-runner/emu-crash-37.2.13.db, detection is enabled for process: 2649
+INFO         | Storing crashdata in: /tmp/android-runner/emu-crash-37.2.13.db, detection is enabled for process: 2647
 INFO         | Initializing gfxstream backend
 INFO         | startOpenglesRendererImpl: gpu info
 INFO         | 
@@ -51,7 +51,7 @@ INFO         | Graphics API Version OpenGL ES 3.0 (OpenGL ES 3.0 SwiftShader 4.0
 INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_standard_derivatives GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 
 INFO         | Graphics Device Extensions N/A
 INFO         | Disabling sparse binding feature support
-INFO         | Sending adb public key [QAAAAHEW6dpvFZhT4+UJgg8s/hc7pN4nYPEPybXabz50czVANHvb3aa4gQaunGgPnhY0RD7j7sOYtOmkGBqNv71f40b2Jsx4Z2P/g3/RdJfseJaf5U0/QZr5LeLr+7Zk0+58W34Vu+lyjtABkW+eD0KlTXUI75Mzdi3GUDxsdnGQXAR+4wczqpwq5HXzsztyLW7sLqs30uwPD3jR9V23YfqDXMxXRJUcmYKcTp1MoaJjOZThO6c3BUmKs2JhGhZ0SBDfDema+jTqISptqwTcuXBwZegykNoEzYJlkBm3hShDgcR5Ms73M4hAy/H25Vd3Gkib+oE/qEs/8+lC2NtOt4LgkEIgGNPS0dQSv6fpf0OwOMvmB2iOfLT/vYeK1EjWZyQ76lMYnoY8wYjrlFGLhWpa0RThkaCLqqOQTzwwL/dWlIChA5qKKO+sd/YsXONCpSemEsP4taEvka/BCYJIF1yugMNodQadfeivBABGBk1f/pS1qw+gj5INrQE6uukUDL7c61kCTpyE87sjn1LDaRfQydRJIDjXnBOw5hHOmJtFzJtnZYspw7lk7sN8x1Orpodu1C2pc0VbiYieHuLRLXSkOkwcQDdnP0uz4WD2ABSJqlQ619LMuUlMd4LOdz7czcA9IhKxTtLkToNzJ+7ToDJ2kfIlG4p5Fdl943YWFTML04EnzraelgEAAQA= runner@unknown]
+INFO         | Sending adb public key [QAAAAMsZsOgdvNQ/Psll5d/AwgmkA7U7z1ffRZg6jm37liHdfsBKdXMGqo35CdbQxAJZNdE0KKNismwfjGRoq6CoAHI5jd4j2dK8+rV6WzBIwzX8Mg5iPXZ7NM5S1dWeP/ayUxFO87VVZdzYR5yZG0c2AR6xuVDPKcMiKNE1/MncKpC3J2zRBefHkIGK7GJS3dTJDSkFmxT3H2nz5EfqPg6d/ShohbTNbe5pQfkMS2Uh18k/gK9XA93oCNzWw4erl+smmqbMSPQvc3NnaVBz745O4abxe44NpqXhD/lLGDJZJLbCtR8QnTBbhXOZgtTXA/SgxVYZSpGvsIvDUngwtRxGOIhVxJXSV+mVF0rN2mQ/Dzq7/oxKumO+7bRIpQbjfWa2CRyNJHjMSoRa6IN9TtwDAsaQyNP7Agt326gHAu8wn3oASvmcVxaIiM3Y5dlQBvBktHwnvlhKZLn0iStfRy2GHh38uQJAvOIFNLwu+vKwlM/Kv52V+55Q0O6nyQ05JDLapCfeY6PbbH/QQj3ckKu4x6Nvy7BxLccX7TIjtbegWHARhM6k8aT4ds7IyEk2qhQ6OHrYMKdyy2b58qDGVobH8SOdyJHkWIudp/rKUtnb956tqzDbjicjdGCrJC9nExyX+egVASey7YxNN6iYfl10WRv/sxaUoFGskC6xm1KJDRPaEfwIcQEAAQA= runner@unknown]
 INFO         | Userspace boot properties:
 INFO         |   androidboot.boot_devices=pci0000:00/0000:00:03.0 pci0000:00/0000:00:06.0
 INFO         |   androidboot.dalvik.vm.heapsize=576m
@@ -63,7 +63,7 @@ INFO         |   androidboot.hardware.vulkan=ranchu
 INFO         |   androidboot.logcat=*:V
 INFO         |   androidboot.opengles.version=196608
 INFO         |   androidboot.qemu=1
-INFO         |   androidboot.qemu.adb.pubkey=QAAAAHEW6dpvFZhT4+UJgg8s/hc7pN4nYPEPybXabz50czVANHvb3aa4gQaunGgPnhY0RD7j7sOYtOmkGBqNv71f40b2Jsx4Z2P/g3/RdJfseJaf5U0/QZr5LeLr+7Zk0+58W34Vu+lyjtABkW+eD0KlTXUI75Mzdi3GUDxsdnGQXAR+4wczqpwq5HXzsztyLW7sLqs30uwPD3jR9V23YfqDXMxXRJUcmYKcTp1MoaJjOZThO6c3BUmKs2JhGhZ0SBDfDema+jTqISptqwTcuXBwZegykNoEzYJlkBm3hShDgcR5Ms73M4hAy/H25Vd3Gkib+oE/qEs/8+lC2NtOt4LgkEIgGNPS0dQSv6fpf0OwOMvmB2iOfLT/vYeK1EjWZyQ76lMYnoY8wYjrlFGLhWpa0RThkaCLqqOQTzwwL/dWlIChA5qKKO+sd/YsXONCpSemEsP4taEvka/BCYJIF1yugMNodQadfeivBABGBk1f/pS1qw+gj5INrQE6uukUDL7c61kCTpyE87sjn1LDaRfQydRJIDjXnBOw5hHOmJtFzJtnZYspw7lk7sN8x1Orpodu1C2pc0VbiYieHuLRLXSkOkwcQDdnP0uz4WD2ABSJqlQ619LMuUlMd4LOdz7czcA9IhKxTtLkToNzJ+7ToDJ2kfIlG4p5Fdl943YWFTML04EnzraelgEAAQA= runner@unknown
+INFO         |   androidboot.qemu.adb.pubkey=QAAAAMsZsOgdvNQ/Psll5d/AwgmkA7U7z1ffRZg6jm37liHdfsBKdXMGqo35CdbQxAJZNdE0KKNismwfjGRoq6CoAHI5jd4j2dK8+rV6WzBIwzX8Mg5iPXZ7NM5S1dWeP/ayUxFO87VVZdzYR5yZG0c2AR6xuVDPKcMiKNE1/MncKpC3J2zRBefHkIGK7GJS3dTJDSkFmxT3H2nz5EfqPg6d/ShohbTNbe5pQfkMS2Uh18k/gK9XA93oCNzWw4erl+smmqbMSPQvc3NnaVBz745O4abxe44NpqXhD/lLGDJZJLbCtR8QnTBbhXOZgtTXA/SgxVYZSpGvsIvDUngwtRxGOIhVxJXSV+mVF0rN2mQ/Dzq7/oxKumO+7bRIpQbjfWa2CRyNJHjMSoRa6IN9TtwDAsaQyNP7Agt326gHAu8wn3oASvmcVxaIiM3Y5dlQBvBktHwnvlhKZLn0iStfRy2GHh38uQJAvOIFNLwu+vKwlM/Kv52V+55Q0O6nyQ05JDLapCfeY6PbbH/QQj3ckKu4x6Nvy7BxLccX7TIjtbegWHARhM6k8aT4ds7IyEk2qhQ6OHrYMKdyy2b58qDGVobH8SOdyJHkWIudp/rKUtnb956tqzDbjicjdGCrJC9nExyX+egVASey7YxNN6iYfl10WRv/sxaUoFGskC6xm1KJDRPaEfwIcQEAAQA= runner@unknown
 INFO         |   androidboot.qemu.avd_name=proba
 INFO         |   androidboot.qemu.camera_hq_edge_processing=0
 INFO         |   androidboot.qemu.camera_protocol_ver=1
@@ -82,29 +82,47 @@ INFO         |   androidboot.vbmeta.digest=451e57ed688ff746d2c636d52169ade253e2b
 INFO         |   androidboot.vbmeta.hash_alg=sha256
 INFO         |   androidboot.vbmeta.size=6656
 INFO         |   androidboot.veritymode=enforcing
-WARNING: cannnot unmap ptr 0x7fec61201000 as it is in the protected range from 0x7feba1200000 to 0x7fec61400000
+WARNING: cannnot unmap ptr 0x7f34bd601000 as it is in the protected range from 0x7f33fd600000 to 0x7f34bd800000
 INFO         | Monitoring duration of emulator setup.
 WARNING      | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
 INFO         | Using security allow list from: /usr/local/lib/android/sdk/emulator/lib/emulator_access.json
-INFO         | The active JSON Web Key Sets can be found here: /run/user/1001/avd/running/2649/jwks/53e1d834-b4c3-444a-880e-03038e003629/active.jwk
-INFO         | Scanning /run/user/1001/avd/running/2649/jwks/53e1d834-b4c3-444a-880e-03038e003629 for jwk keys.
+INFO         | The active JSON Web Key Sets can be found here: /run/user/1001/avd/running/2647/jwks/b06be09d-66c5-4d1b-b008-227bc600e4c1/active.jwk
+INFO         | Scanning /run/user/1001/avd/running/2647/jwks/b06be09d-66c5-4d1b-b008-227bc600e4c1 for jwk keys.
 INFO         | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
-INFO         | Advertising in: /run/user/1001/avd/running/pid_2649.ini
-INFO         | Successfully initialized netsim WiFi
+INFO         | Advertising in: /run/user/1001/avd/running/pid_2647.ini
 INFO         | Activated packet streamer for bluetooth emulation
+INFO         | Successfully initialized netsim WiFi
 INFO         | Setting display: 0 configuration to: 320x640, dpi: 160x160 
 INFO         | setDisplayActiveConfig: id:0, 320x640
 INFO         | emulatorSetupEnvironment: Environment scene is not required
 USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
 WARNING      | Failed to process .ini file /home/runner/.android/emu-update-last-check.ini for reading.
 WARNING      | Failed to process .ini file /home/runner/.android/emu-update-last-check.ini for reading.
-INFO         | Boot completed in 25928 ms
+INFO         | Boot completed in 26500 ms
 INFO         | Increasing screen off timeout, logcat buffer size to 2M.
-ERROR        | Failed to find ColorBuffer: 41
+ERROR        | Failed to find ColorBuffer: 146
 ERROR        | Failed to bind to texture: invalid color buffer.
-ERROR        | Failed to find ColorBuffer: 186
+ERROR        | Failed to find ColorBuffer: 286
 ERROR        | Failed to bind to texture: invalid color buffer.
-ERROR        | Failed to find ColorBuffer: 213
-ERROR        | Failed to bind to texture: invalid color buffer.
-ERROR        | Failed to find ColorBuffer: 292
-ERROR        | Failed to bind to texture: invalid color buffer.
+dlopen "libcuda.so" failed!
+dlopen "libcuda.so" failed!
+dlopen "libcuda.so" failed!
+Failed to call cuInit, cannot use nvidia cuvid decoder for h264 stream
+[h264 @ 0x5601c78f6d00] no frame!
+[h264 @ 0x5601c78f6d00] no frame!
+[h264 @ 0x5601e67d8000] no frame!
+[h264 @ 0x5601e67d8000] no frame!
+[h264 @ 0x5601e67e1b00] no frame!
+[h264 @ 0x5601e67e1b00] no frame!
+[h264 @ 0x5601e67d5b00] no frame!
+[h264 @ 0x5601e67d5b00] no frame!
+[h264 @ 0x5601bfbbad80] no frame!
+[h264 @ 0x5601bfbbad80] no frame!
+[h264 @ 0x5601c7a57680] no frame!
+[h264 @ 0x5601c7a57680] no frame!
+[h264 @ 0x5601e67e1200] no frame!
+[h264 @ 0x5601e67e1200] no frame!
+[h264 @ 0x5601c7463b00] no frame!
+[h264 @ 0x5601c7463b00] no frame!
+[h264 @ 0x5601ce90e400] no frame!
+[h264 @ 0x5601ce90e400] no frame!
