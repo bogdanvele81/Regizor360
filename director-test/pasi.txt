@@ -1,1 +1,25 @@
-telefonul virtual nu pornește
+telefon virtual pornit (Android 14)
+instalat
+poză: 01-pornire
+poză: 02-acasa
+atins: Filmări
+poză: 03-filmari
+atins: Poze
+poză: 04-poze
+atins: Ajutor
+poză: 05-ajutor
+atins: Cameră
+poză: 06-camera
+fără ffmpeg: fără fișiere de probă
+nu pot pune /tmp/media/*
+poză: 07-lista
+atins: Poze
+poză: 08-lista-poze
+atins: Filmări
+poză: 09-lista-filmari
+poză: 10-editor
+nu găsesc pe ecran: Pornește
+poză: 11-editor-play
+poză: 12-poza360
+poză: 13-poza
+fără erori
