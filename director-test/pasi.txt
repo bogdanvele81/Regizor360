@@ -13,13 +13,14 @@ atins: Ajutor
 poză: 05-ajutor
 atins: Cameră
 poză: 06-camera
-total 16404
-drwxr-xr-x  2 runner runner    4096 Nov  9 16:23 .
-drwxrwxrwt 16 root   root      4096 Nov  9 16:23 ..
--rw-r--r--  1 runner runner  268658 Nov  9 16:23 IMG_20260905_130500_00_003.insp
--rw-r--r--  1 runner runner   23021 Nov  9 16:23 IMG_20260905_130600.jpg
--rw-r--r--  1 runner runner 7177986 Nov  9 16:23 VID_20260904_120000_00_002.mp4
--rw-r--r--  1 runner runner 9312103 Nov  9 16:23 VID_20260905_130400_00_001.mp4
+nu pot face filmarea 360 de probă
+total 16436
+drwxr-xr-x  2 runner runner    4096 Nov  9 17:21 .
+drwxrwxrwt 16 root   root      4096 Nov  9 17:20 ..
+-rw-r--r--  1 runner runner  300345 Nov  9 17:21 IMG_20260905_130500_00_003.insp
+-rw-r--r--  1 runner runner   23021 Nov  9 17:21 IMG_20260905_130600.jpg
+-rw-r--r--  1 runner runner 7178073 Nov  9 17:21 VID_20260904_120000_00_002.mp4
+-rw-r--r--  1 runner runner 9312099 Nov  9 17:20 VID_20260905_130400_00_001.mp4
 poză: 07-lista
 atins: Poze
 poză: 08-lista-poze
@@ -30,21 +31,38 @@ poză: 11-editor
 atins: Pornește
 poză: 12-editor-play
 poză: 13-montaj
-atins: Filtru
-poză: 14-filtru
+atins: Montaj
+poză: 14-montaj-foaie
+nu găsesc pe ecran: Gata
+nu găsesc pe ecran: Filtru
+poză: 15-filtru
 nu găsesc pe ecran: Viu
-poză: 15-filtru-viu
-atins: Durată
-poză: 16-durata
+poză: 16-filtru-viu
+nu găsesc pe ecran: Gata
+atins: Template
+poză: 17-template
+atins: Road Trip
+atins: Folosește șablonul
+poză: 18-template-folosit
+atins: Text
+poză: 19-text
+atins: Vlog
+poză: 20-text-vlog
+atins: Gata
+atins: Sticker
+poză: 21-sticker
+atins: 🔥
+poză: 22-sticker-pus
+atins: Gata
 atins: Salvează
 atins: Salvează
-poză: 17-salvez
-poză: 18-salvat
-fișiere salvate: total 9620
--rwxrwx--- 1 u0_a170 media_rw 9843456 2026-11-09 16:25 Director360_20261109_162540.mp4
+poză: 23-salvez
+poză: 24-salvat
+fișiere salvate: total 9652
+-rwxrwx--- 1 u0_a189 media_rw 9877249 2026-11-09 17:24 Director360_20261109_172433.mp4
 stream|codec_type=audio
 stream|codec_type=video|width=1920|height=1080
 format|duration=9.032562
-poză: 19-poza360
-poză: 20-poza
+poză: 25-poza360
+poză: 26-poza
 fără erori
