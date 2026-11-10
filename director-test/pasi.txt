@@ -15,12 +15,12 @@ atins: Cameră
 poză: 06-camera
 nu pot face filmarea 360 de probă
 total 16436
-drwxr-xr-x  2 runner runner    4096 Nov  9 20:23 .
-drwxrwxrwt 16 root   root      4096 Nov  9 20:23 ..
--rw-r--r--  1 runner runner  300345 Nov  9 20:23 IMG_20260905_130500_00_003.insp
--rw-r--r--  1 runner runner   23021 Nov  9 20:23 IMG_20260905_130600.jpg
--rw-r--r--  1 runner runner 7178073 Nov  9 20:23 VID_20260904_120000_00_002.mp4
--rw-r--r--  1 runner runner 9312099 Nov  9 20:23 VID_20260905_130400_00_001.mp4
+drwxr-xr-x  2 runner runner    4096 Nov 10 13:19 .
+drwxrwxrwt 16 root   root      4096 Nov 10 13:19 ..
+-rw-r--r--  1 runner runner  300345 Nov 10 13:19 IMG_20260905_130500_00_003.insp
+-rw-r--r--  1 runner runner   23021 Nov 10 13:19 IMG_20260905_130600.jpg
+-rw-r--r--  1 runner runner 7177986 Nov 10 13:19 VID_20260904_120000_00_002.mp4
+-rw-r--r--  1 runner runner 9312103 Nov 10 13:19 VID_20260905_130400_00_001.mp4
 poză: 07-lista
 atins: Poze
 poză: 08-lista-poze
@@ -33,7 +33,7 @@ poză: 12-editor-play
 poză: 13-montaj
 atins: Montaj
 poză: 14-montaj-foaie
-atins: Gata
+nu găsesc pe ecran: Gata
 nu găsesc pe ecran: Filtru
 poză: 15-filtru
 nu găsesc pe ecran: Viu
@@ -58,11 +58,23 @@ atins: Salvează
 atins: Salvează
 poză: 23-salvez
 poză: 24-salvat
-fișiere salvate: total 9660
--rwxrwx--- 1 u0_a181 media_rw 9884011 2026-11-09 20:27 Director360_20261109_202716.mp4
+fișiere salvate: total 9632
+-rwxrwx--- 1 u0_a175 media_rw 9856032 2026-11-10 13:23 Director360_20261110_132331.mp4
 stream|codec_type=audio
 stream|codec_type=video|width=1920|height=1080
 format|duration=9.032562
 poză: 25-poza360
+atins: Tiny Planet
+poză: 25b-poza-planet
+atins: Panoramă 360
+poză: 25c-poza-pano
+atins: Cadru
+poză: 25d-poza-jos
+nu găsesc pe ecran: Viu
+poză: 25e-poza-viu
+poză: 25f-poza-salveaza
+nu găsesc pe ecran: Salvează poza
+poză: 25g-poza-salvata
+ls: /sdcard/Pictures/Director360: No such file or directory
 poză: 26-poza
 fără erori
