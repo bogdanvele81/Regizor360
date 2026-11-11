@@ -11,6 +11,10 @@ atins: Poze
 poză: 04-poze
 atins: Ajutor
 poză: 05-ajutor
-atins: Cameră
+nu găsesc pe ecran: Albastru
+poză: 05b-tema-albastra
+atins: Ajutor
+nu găsesc pe ecran: Portocaliu
+nu găsesc pe ecran: Cameră
 poză: 06-camera
 PROBA A DURAT PREA MULT, am oprit-o
