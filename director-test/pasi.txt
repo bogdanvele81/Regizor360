@@ -11,10 +11,98 @@ atins: Poze
 poză: 04-poze
 atins: Ajutor
 poză: 05-ajutor
-nu găsesc pe ecran: Albastru
+atins: Albastru
 poză: 05b-tema-albastra
 atins: Ajutor
-nu găsesc pe ecran: Portocaliu
-nu găsesc pe ecran: Cameră
+atins: Portocaliu
+atins: Cameră
 poză: 06-camera
-PROBA A DURAT PREA MULT, am oprit-o
+instalez ffmpeg
+ffmpeg nu s-a instalat
+fără ffmpeg: fără fișiere de probă
+nu pot pune /tmp/media/*
+poză: 07-lista
+atins: Poze
+poză: 08-lista-poze
+atins: Filmări
+poză: 09-lista-filmari
+poză: 10-alese
+poză: 11-editor
+nu găsesc pe ecran: Pornește
+poză: 12-editor-play
+poză: 13-montaj
+nu găsesc pe ecran: Montaj
+poză: 14-montaj-foaie
+nu găsesc pe ecran: Gata
+nu găsesc pe ecran: Filtru
+poză: 15-filtru
+nu găsesc pe ecran: Viu
+poză: 16-filtru-viu
+nu găsesc pe ecran: Desen animat
+poză: 16b-film-desen-animat
+nu găsesc pe ecran: Gata
+nu găsesc pe ecran: Template
+poză: 17-template
+nu găsesc pe ecran: Road Trip
+nu găsesc pe ecran: Folosește șablonul
+poză: 18-template-folosit
+nu găsesc pe ecran: Text
+poză: 19-text
+nu găsesc pe ecran: Vlog
+poză: 20-text-vlog
+nu găsesc pe ecran: Gata
+nu găsesc pe ecran: Sticker
+poză: 21-sticker
+nu găsesc pe ecran: 🔥
+poză: 22-sticker-pus
+nu găsesc pe ecran: Gata
+nu găsesc pe ecran: Salvează
+nu găsesc pe ecran: Salvează
+poză: 23-salvez
+poză: 24-salvat
+fișiere salvate: 
+NU S-A SALVAT NICIUN FILM
+poză: 25-poza360
+nu găsesc pe ecran: Tiny Planet
+poză: 25b-poza-planet
+nu găsesc pe ecran: Panoramă 360
+poză: 25c-poza-pano
+nu găsesc pe ecran: Cadru
+poză: 25d-poza-jos
+nu găsesc pe ecran: Viu
+poză: 25e-poza-viu
+poză: 25f-poza-salveaza
+nu găsesc pe ecran: Salvează poza
+poză: 25g-poza-salvata
+ls: /sdcard/Pictures/Director360: No such file or directory
+poză: 26-poza
+nu găsesc pe ecran: Desen animat
+poză: 26b-desen-animat
+nu găsesc pe ecran: Creion
+poză: 26c-creion
+nu găsesc pe ecran: Benzi desenate
+poză: 26d-benzi
+nu găsesc pe ecran: Acuarelă
+poză: 26e-acuarela
+nu găsesc pe ecran: Fără
+nu găsesc pe ecran: Atinge haina pe poză
+poză: 26g-haina-aleasa
+nu găsesc pe ecran: Verde
+poză: 26h-haina-verde
+nu găsesc pe ecran: Ecran întreg
+poză: 27-ecran-intreg
+nu găsesc pe ecran: Desen
+poză: 27b-ecran-desen
+nu găsesc pe ecran: Desen animat
+poză: 27c-ecran-desen-animat
+poză: 27c2-coloana
+poză: 27d-ecran-culcat
+nu găsesc pe ecran: Filtre
+poză: 27e-ecran-culcat-filtre
+nu găsesc pe ecran: Reglaje
+poză: 27f-ecran-culcat-reglaje
+nu găsesc pe ecran: Contrast
+poză: 27g-coloana-contrast
+nu găsesc pe ecran: Salvează poza
+poză: 26f-desen-salvat
+fără erori
