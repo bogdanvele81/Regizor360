@@ -17,10 +17,16 @@ atins: Ajutor
 atins: Portocaliu
 atins: Cameră
 poză: 06-camera
-instalez ffmpeg
-ffmpeg nu s-a instalat
-fără ffmpeg: fără fișiere de probă
-nu pot pune /tmp/media/*
+fișiere de probă din arhivă: 6
+total 3676
+drwxr-xr-x  2 runner runner    4096 Nov 11 19:30 .
+drwxrwxrwt 16 root   root      4096 Nov 11 19:30 ..
+-rw-r--r--  1 runner runner  274368 Nov 11 19:30 IMG_20260905_130500_00_003.insp
+-rw-r--r--  1 runner runner   23021 Nov 11 19:30 IMG_20260905_130600.jpg
+-rw-r--r--  1 runner runner 1031801 Nov 11 19:30 LRV_20260905_130700_01_005.lrv
+-rw-r--r--  1 runner runner  435465 Nov 11 19:30 VID_20260904_120000_00_002.mp4
+-rw-r--r--  1 runner runner  951702 Nov 11 19:30 VID_20260905_130400_00_001.mp4
+-rw-r--r--  1 runner runner 1031801 Nov 11 19:30 VID_20260905_130700_00_005.insv
 poză: 07-lista
 atins: Poze
 poză: 08-lista-poze
@@ -28,46 +34,46 @@ atins: Filmări
 poză: 09-lista-filmari
 poză: 10-alese
 poză: 11-editor
-nu găsesc pe ecran: Pornește
+atins: Pornește
 poză: 12-editor-play
 poză: 13-montaj
-nu găsesc pe ecran: Montaj
+atins: Montaj
 poză: 14-montaj-foaie
-nu găsesc pe ecran: Gata
-nu găsesc pe ecran: Filtru
+atins: Gata
+atins: Filtru
 poză: 15-filtru
 nu găsesc pe ecran: Viu
 poză: 16-filtru-viu
 nu găsesc pe ecran: Desen animat
 poză: 16b-film-desen-animat
 nu găsesc pe ecran: Gata
-nu găsesc pe ecran: Template
+atins: Template
 poză: 17-template
-nu găsesc pe ecran: Road Trip
-nu găsesc pe ecran: Folosește șablonul
+atins: Road Trip
+atins: Folosește șablonul
 poză: 18-template-folosit
-nu găsesc pe ecran: Text
+atins: Text
 poză: 19-text
-nu găsesc pe ecran: Vlog
+atins: Vlog
 poză: 20-text-vlog
-nu găsesc pe ecran: Gata
-nu găsesc pe ecran: Sticker
+atins: Gata
+atins: Sticker
 poză: 21-sticker
-nu găsesc pe ecran: 🔥
+atins: 🔥
 poză: 22-sticker-pus
-nu găsesc pe ecran: Gata
-nu găsesc pe ecran: Salvează
-nu găsesc pe ecran: Salvează
+atins: Gata
+atins: Salvează
+atins: Salvează
 poză: 23-salvez
 poză: 24-salvat
-fișiere salvate: 
-NU S-A SALVAT NICIUN FILM
+fișiere salvate: total 9552
+-rwxrwx--- 1 u0_a173 media_rw 9777126 2026-11-11 19:34 Director360_20261111_193429.mp4
 poză: 25-poza360
-nu găsesc pe ecran: Tiny Planet
+atins: Tiny Planet
 poză: 25b-poza-planet
-nu găsesc pe ecran: Panoramă 360
+atins: Panoramă 360
 poză: 25c-poza-pano
-nu găsesc pe ecran: Cadru
+atins: Cadru
 poză: 25d-poza-jos
 nu găsesc pe ecran: Viu
 poză: 25e-poza-viu
@@ -76,33 +82,33 @@ nu găsesc pe ecran: Salvează poza
 poză: 25g-poza-salvata
 ls: /sdcard/Pictures/Director360: No such file or directory
 poză: 26-poza
-nu găsesc pe ecran: Desen animat
+atins: Desen animat
 poză: 26b-desen-animat
-nu găsesc pe ecran: Creion
+atins: Creion
 poză: 26c-creion
-nu găsesc pe ecran: Benzi desenate
+atins: Benzi desenate
 poză: 26d-benzi
-nu găsesc pe ecran: Acuarelă
+atins: Acuarelă
 poză: 26e-acuarela
-nu găsesc pe ecran: Fără
+atins: Fără
 nu găsesc pe ecran: Atinge haina pe poză
 poză: 26g-haina-aleasa
 nu găsesc pe ecran: Verde
 poză: 26h-haina-verde
-nu găsesc pe ecran: Ecran întreg
+atins: Ecran întreg
 poză: 27-ecran-intreg
-nu găsesc pe ecran: Desen
+atins: Desen
 poză: 27b-ecran-desen
-nu găsesc pe ecran: Desen animat
+atins: Desen animat
 poză: 27c-ecran-desen-animat
 poză: 27c2-coloana
 poză: 27d-ecran-culcat
-nu găsesc pe ecran: Filtre
+atins: Filtre
 poză: 27e-ecran-culcat-filtre
-nu găsesc pe ecran: Reglaje
+atins: Reglaje
 poză: 27f-ecran-culcat-reglaje
-nu găsesc pe ecran: Contrast
+atins: Contrast
 poză: 27g-coloana-contrast
-nu găsesc pe ecran: Salvează poza
+atins: Salvează poza
 poză: 26f-desen-salvat
 fără erori
