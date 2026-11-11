@@ -19,14 +19,14 @@ atins: Cameră
 poză: 06-camera
 fișiere de probă din arhivă: 6
 total 3676
-drwxr-xr-x  2 runner runner    4096 Nov 11 19:30 .
-drwxrwxrwt 16 root   root      4096 Nov 11 19:30 ..
--rw-r--r--  1 runner runner  274368 Nov 11 19:30 IMG_20260905_130500_00_003.insp
--rw-r--r--  1 runner runner   23021 Nov 11 19:30 IMG_20260905_130600.jpg
--rw-r--r--  1 runner runner 1031801 Nov 11 19:30 LRV_20260905_130700_01_005.lrv
--rw-r--r--  1 runner runner  435465 Nov 11 19:30 VID_20260904_120000_00_002.mp4
--rw-r--r--  1 runner runner  951702 Nov 11 19:30 VID_20260905_130400_00_001.mp4
--rw-r--r--  1 runner runner 1031801 Nov 11 19:30 VID_20260905_130700_00_005.insv
+drwxr-xr-x  2 runner runner    4096 Nov 11 20:02 .
+drwxrwxrwt 16 root   root      4096 Nov 11 20:02 ..
+-rw-r--r--  1 runner runner  274368 Nov 11 20:02 IMG_20260905_130500_00_003.insp
+-rw-r--r--  1 runner runner   23021 Nov 11 20:02 IMG_20260905_130600.jpg
+-rw-r--r--  1 runner runner 1031801 Nov 11 20:02 LRV_20260905_130700_01_005.lrv
+-rw-r--r--  1 runner runner  435465 Nov 11 20:02 VID_20260904_120000_00_002.mp4
+-rw-r--r--  1 runner runner  951702 Nov 11 20:02 VID_20260905_130400_00_001.mp4
+-rw-r--r--  1 runner runner 1031801 Nov 11 20:02 VID_20260905_130700_00_005.insv
 poză: 07-lista
 atins: Poze
 poză: 08-lista-poze
@@ -40,7 +40,7 @@ poză: 13-montaj
 atins: Montaj
 poză: 14-montaj-foaie
 atins: Gata
-atins: Filtru
+nu găsesc pe ecran: Filtru
 poză: 15-filtru
 nu găsesc pe ecran: Viu
 poză: 16-filtru-viu
@@ -66,8 +66,8 @@ atins: Salvează
 atins: Salvează
 poză: 23-salvez
 poză: 24-salvat
-fișiere salvate: total 9552
--rwxrwx--- 1 u0_a173 media_rw 9777126 2026-11-11 19:34 Director360_20261111_193429.mp4
+fișiere salvate: total 9348
+-rwxrwx--- 1 u0_a179 media_rw 9566880 2026-11-11 20:05 Director360_20261111_200546.mp4
 poză: 25-poza360
 atins: Tiny Planet
 poză: 25b-poza-planet
@@ -97,16 +97,13 @@ nu găsesc pe ecran: Verde
 poză: 26h-haina-verde
 atins: Ecran întreg
 poză: 27-ecran-intreg
-atins: Desen
+atins: Desen animat, creion
 poză: 27b-ecran-desen
 atins: Desen animat
 poză: 27c-ecran-desen-animat
-poză: 27c2-coloana
 poză: 27d-ecran-culcat
 atins: Filtre
 poză: 27e-ecran-culcat-filtre
-atins: Reglaje
-poză: 27f-ecran-culcat-reglaje
 atins: Contrast
 poză: 27g-coloana-contrast
 atins: Salvează poza
